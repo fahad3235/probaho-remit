@@ -1,0 +1,52 @@
+/* ============================================================
+   Probaho Remit — Module 4: FX Timing Advisor (module styles)
+   Uses shared design-system classes; fx- classes only below.
+   ============================================================ */
+
+.fx-module {
+  padding: 8px 0 16px;
+}
+
+.fx-title {
+  margin: .55em 0 .35em;
+}
+
+.fx-controls {
+  max-width: 460px;
+}
+
+.fx-controls > div {
+  flex: 1;
+}
+
+.fx-signal-row {
+  margin-bottom: 10px;
+}
+
+.fx-signal-reason {
+  color: var(--soft);
+  font-size: .95rem;
+  margin: 0;
+}
+
+.fx-chart-card h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.fx-chart-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.fx-canvas {
+  display: block;
+  width: 100%;
+  height: 320px;
+}
+
+@media (max-width: 560px) {
+  .fx-controls {
+    max-width: 100%;
+  }
+}

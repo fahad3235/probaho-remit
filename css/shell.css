@@ -1,0 +1,18 @@
+/* Probaho Remit — shell (nav/landing layout) tweaks.
+   design-system.css owns the tokens; these are landing-specific additions. */
+
+/* Corridor pills on the landing */
+.corridor-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.8em}
+.corridor-pill{
+  font-size:.85rem;font-weight:600;color:#c9d6e4;
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 14px;
+}
+.corridor-pill .arrow{color:var(--teal);margin:0 4px}
+
+/* How-it-works steps */
+.step-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:50%;
+  background:var(--navy);color:#fff;font-family:var(--font-display);font-weight:800;
+  margin-bottom:.6em;
+}

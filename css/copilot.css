@@ -1,0 +1,19 @@
+/* ============================================================
+   Probaho Remit — MODULE 6: Ask Probaho styles (cop- prefix)
+   Shared chat classes come from the design system.
+   ============================================================ */
+
+.cop-wrap .badge-demo{margin-bottom:8px}
+.cop-card{max-width:760px}
+.cop-chat{min-height:320px}
+.cop-gemini{margin-top:16px}
+.cop-gemini-row{display:flex;gap:10px;align-items:center}
+.cop-gemini-row .input{flex:1}
+.cop-status{margin:.8em 0 0;min-height:1.2em}
+.cop-status-ok{color:var(--green)}
+.cop-status-warn{color:#a33d00}
+
+@media (max-width:560px){
+  .cop-gemini-row{flex-direction:column;align-items:stretch}
+  .cop-gemini-row .btn{align-self:flex-start}
+}

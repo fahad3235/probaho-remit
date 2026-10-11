@@ -1,0 +1,91 @@
+/* ============================================================
+   Probaho Remit — MODULE 7: Payment Vault styles
+   Uses shared design-system tokens; only vault- prefixed classes.
+   ============================================================ */
+
+/* Three KPI cards instead of the design-system four-column default */
+.vault-kpis {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Mono reference codes */
+.vault-ref {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .01em;
+}
+
+/* Ledger rows are clickable */
+tr.vault-row {
+  cursor: pointer;
+}
+tr.vault-row:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: -2px;
+}
+
+/* Receipt modal header */
+.vault-modal-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.vault-modal-head h3 {
+  margin: 0;
+}
+
+/* Definition rows in the receipt */
+.vault-def {
+  margin-bottom: 16px;
+}
+.vault-def-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.vault-def-row:last-child {
+  border-bottom: 0;
+}
+.vault-def-label {
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.vault-def-value {
+  text-align: right;
+  font-size: .95rem;
+}
+.vault-amount {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--teal-dark);
+}
+
+/* Modal footer */
+.vault-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 560px) {
+  .vault-kpis {
+    grid-template-columns: 1fr 1fr;
+  }
+  .vault-def-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+  .vault-def-value {
+    text-align: left;
+  }
+}

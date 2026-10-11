@@ -1,0 +1,77 @@
+/* Tuition Planner — module-scoped styles (tuit- prefix) */
+
+.tuit-stack{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.tuit-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.tuit-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+}
+
+.tuit-row-info{min-width:0}
+
+.tuit-row-title{
+  font-weight:700;
+  font-size:.95rem;
+  overflow-wrap:anywhere;
+}
+
+.tuit-row-side{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+}
+
+.tuit-overdue{
+  color:var(--red);
+  font-weight:800;
+}
+
+.tuit-hr{
+  border:0;
+  border-top:1px solid var(--line);
+  margin:18px 0;
+}
+
+.tuit-h4{
+  font-size:.95rem;
+  margin-bottom:10px;
+}
+
+.tuit-add{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.tuit-warn{
+  color:var(--red);
+  font-weight:600;
+}
+
+.tuit-budget-meta .tuit-kpis{
+  grid-template-columns:1fr 1fr;
+  margin:0;
+}
+
+@media (max-width:560px){
+  .tuit-row{flex-direction:column;align-items:flex-start}
+  .tuit-row-side{width:100%;justify-content:space-between}
+  .tuit-budget-meta .tuit-kpis{grid-template-columns:1fr}
+}
