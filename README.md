@@ -2,8 +2,7 @@
 > **2026 Shenzhen International FinTech Competition (AI DEV FEST 2026)**  
 > *International Track · Topic C: AI as a Financial Participant*
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-TryCloudflare-10b981?style=for-the-badge&logo=cloudflare)](https://producers-liquid-shortcuts-courage.trycloudflare.com)
-[![Netlify](https://img.shields.io/badge/Netlify-Ready-00C7B7?style=for-the-badge&logo=netlify)](https://app.netlify.com/drop)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-10b981?style=for-the-badge)](https://fahad3235.github.io/probaho-remit/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 ---
@@ -80,21 +79,19 @@ Probaho Remit implements AI across three specialized layers:
 
 - **Core & Runtime**: HTML5, Vanilla JavaScript (ES6+), CSS3 with CSS Custom Properties (Design Tokens).
 - **Styling & Design System**: Custom Vanilla CSS Design System with responsive grid layouts, glassmorphism accents, luxury UI skins, and accessibility compliance.
-- **Backend Service (Optional Local/Cloud)**: Node.js (v18+) with standard HTTP/HTTPS modules, Express routing compatibility, and Netlify Functions support.
 - **Data Persistence**: In-memory deterministic mock state + browser `localStorage` and `sessionStorage` fallback layers.
 - **AI & Analytics**: Custom on-device Natural Language heuristic intent parser, statistical FX simulator, SVG chart vector engine.
 - **Security & RBAC**: Air-gapped role separation, client-side PBKDF2/SHA-256 simulation, brute-force rate limiter, CSP/X-Frame-Options/X-Content-Type headers.
-- **Hosting & Deployment**: Netlify Static Hosting, Cloudflare Quick Tunnels, Docker/Node container compatible.
+- **Hosting & Deployment**: Static hosting (GitHub Pages). No backend, no build step.
 
 ---
 
 ## 4. Requirements & Prerequisites
 
 To run or develop the project locally:
-- **Node.js**: Version 18.0.0 or higher.
 - **Web Browser**: Any modern browser (Google Chrome 110+, Microsoft Edge 110+, Mozilla Firefox 110+, Safari 16+).
 - **Disk Space**: ~10 MB for source code and dependencies.
-- **Network**: Internet access is only required for live Cloudflare tunneling; all core functionality runs 100% offline.
+- **Network**: All core functionality runs 100% offline (demo data is bundled).
 
 ---
 
@@ -106,93 +103,35 @@ git clone https://github.com/fahad3235/probaho-remit.git
 cd probaho-remit
 ```
 
-### 5.2 Environment Configuration
-Copy the provided environment template:
-```bash
-cp .env.example .env
-```
-*(No external secrets or API keys are required for the standalone demo; default values work out of the box).*
-
-### 5.3 Install Dependencies
-The application runs as a zero-dependency static application with an optional lightweight Node.js local development server:
-```bash
-# If running via Node.js local server
-npm install # Optional: package-less server.js runs directly with native Node.js
-```
+### 5.2 Install Dependencies
+None. No dependencies, no environment files, no build step — open `index.html` in a browser or serve the folder from any static host.
 
 ---
 
-## 6. Environment Variables
+## 7. Run
 
-| Variable Name | Purpose | Example / Placeholder Value |
-|---|---|---|
-| `NODE_ENV` | Application environment mode | `development` / `production` |
-| `PORT` | Local development server port | `3000` |
-| `SUPABASE_URL` | Supabase API URL (if connecting cloud backend) | `https://[YOUR_SUPABASE_PROJECT].supabase.co` |
-| `SUPABASE_ANON_KEY` | Public anonymous client API key | `[YOUR_SUPABASE_ANON_KEY]` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Backend administrative access key | `[YOUR_SUPABASE_SERVICE_ROLE_KEY]` |
-| `PROBAHO_SESSION_SECRET` | Secret HMAC seed for backend session tokens | `[YOUR_SECURE_RANDOM_SESSION_SECRET]` |
-| `OPENROUTER_API_KEY` | Optional cloud LLM key for live OpenRouter API | `[YOUR_OPENROUTER_API_KEY]` |
-| `BASIC_KYC_DAILY_LIMIT` | Daily transaction limit for basic KYC | `50000` |
-| `FULL_KYC_DAILY_LIMIT` | Daily transaction limit for verified students | `500000` |
+Probaho Remit is a zero-dependency client-side SPA. Open `index.html` directly in any modern browser, or serve the folder from any static host:
 
----
-
-## 7. Run and Build Commands
-
-### 7.1 Run Local Development Server
 ```bash
-node server.js
+python3 -m http.server 8000
 ```
-The server will start at: `http://127.0.0.1:3000/`
 
-### 7.2 Run Without Server (Direct Browser)
-Because Probaho Remit is built as a zero-dependency client-side SPA, you can also open `index.html` directly in any web browser without running a server.
-
-### 7.3 Build Netlify POSIX-Compliant Package
-To generate a production-ready, Linux-compatible Netlify Drop package:
-```powershell
-powershell -ExecutionPolicy Bypass -File package-netlify.ps1
-```
-This generates `probaho-remit-netlify.zip` with pure POSIX forward slashes (`/`), preventing Linux decompression 404 errors.
+Live demo: https://fahad3235.github.io/probaho-remit/
 
 ---
 
-## 8. Live Deployment URLs
+## 8. Live Deployment
 
 Judges and evaluators can access the live application directly:
 
-- 🚀 **Primary Live Deployment**: [https://producers-liquid-shortcuts-courage.trycloudflare.com](https://producers-liquid-shortcuts-courage.trycloudflare.com)
-- 📦 **Netlify Deploy Ready**: Drop [`probaho-remit-netlify.zip`](probaho-remit-netlify.zip) directly into [app.netlify.com/drop](https://app.netlify.com/drop) for instant global edge deployment.
+- 🚀 **Live Demo**: [https://fahad3235.github.io/probaho-remit/](https://fahad3235.github.io/probaho-remit/)
 
 ---
 
 ## 9. Testing Instructions & Feature Verification
 
 ### 9.1 Automated Test Suites
-Run the automated syntax and feature verification suites included in the repository:
-
-```bash
-# 1. Verify JavaScript syntax integrity across all 136 codebase files
-node check-syntax.js
-
-# 2. Run automated feature & security verification suite
-node verify-features.js
-
-# 3. Verify Netlify archive asset integrity & POSIX paths
-node verify-zip-assets.js
-```
-
-**Expected Results**:
-- All 136 JavaScript files report zero syntax errors.
-- All 7 feature verification tests pass (100% success rate):
-  - Student manual authentication & session creation.
-  - Staff air-gapped authentication.
-  - Cross-portal unauthorized access rejection.
-  - Brute-force rate limiting & 15-minute lockout enforcement.
-  - Open student registration with local persistence.
-  - Notification Hub alerts listing & category filtering.
-  - Modal container rendering with multi-signature support.
+No automated suite ships in this repo. Verification is manual via §9.2 below: walk the sign-in, registration, admin console, corridor optimizer, tuition planner, ScamShield, vault, and copilot flows in the live demo and confirm zero console errors.
 
 ### 9.2 Interactive Manual Testing Guide
 
@@ -242,7 +181,6 @@ node verify-zip-assets.js
 - **Credential Storage**: Passwords are validated using client-side salted SHA-256 hashes in demo mode.
 - **Brute-Force Lockout**: 5 failed consecutive attempts trigger an automatic 15-minute lock. A *"Reset Demo Lock"* button is available in demo mode for evaluators.
 - **Robots Directives**: Administrative views dynamically inject `<meta name="robots" content="noindex, nofollow, noarchive">` to prevent search engine indexing.
-- **Netlify Headers**: `netlify.toml` automatically applies `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and `Referrer-Policy: strict-origin-when-cross-origin`.
 
 ---
 

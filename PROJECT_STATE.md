@@ -12,7 +12,7 @@
 A fully working, enterprise-grade cross-border remittance and fintech web application for the 2026 Shenzhen
 International FinTech Competition (International Track, Topic C — "AI as a Financial Participant").
 Plain HTML5, Vanilla CSS, and modern modular JavaScript without build steps or external bloat.
-Runs locally via `node server.js` on `http://127.0.0.1:3000/`.
+Static site — open `index.html` directly or serve the folder from any static host.
 
 ## Completed modules (all VERIFIED in headless Chromium, desktop + 390px — v2 build)
 - **Landing** (`#/`): hero, credibility caps, corridor quick-pick, 10 module cards, 3 steps, final CTA.
@@ -81,8 +81,9 @@ conveniences, not a security boundary. Documented in `docs/SECURITY_MODEL.md` an
 
 ## Latest verified test results (v2 build — v3 re-verification in progress)
 - Node engine unit tests: **29/29 passed**.
-- In-browser QA harness (`qa/qa.html`, real DOM events via CDP): **49/49 passed** desktop,
+- In-browser QA harness (real DOM events via CDP): **49/49 passed** desktop,
   **49/49 passed** at 390px mobile. **0 console errors, 0 unhandled rejections** on both.
+  (Harness removed during static-only cleanup; results as recorded.)
 - Demo scenario (Dhaka→London, ৳320,000): best = MeridianPay → **£2,035.20** recipient,
   illustrative fees **৳1,922.50**, **£67.34** more than the synthetic benchmark.
 

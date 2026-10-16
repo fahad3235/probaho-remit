@@ -1,8 +1,8 @@
 /* ============================================================
    auth-service.js — Hardened Authentication, Registration Access Gate & Hidden Admin Authorization
    - Environment-dependent Demo Mode vs Production Mode (DemoConfig.demoMode).
-   - Registration Access Code gate verified via salted 1,000x hash + /api/auth/register backend sync.
-   - Student accounts & sessions persist across reloads, browser restarts, and Netlify cold starts.
+   - Registration Access Code gate verified via salted 1,000x hash.
+   - Student accounts & sessions persist across reloads and browser restarts.
    - Cryptographic session integrity signature prevents localStorage role/privilege tampering.
    - Strict separation between Public Student sessions and Hidden Administrator sessions.
    ============================================================ */
@@ -395,24 +395,6 @@ function clearAccountLock(email){
   } catch(e){}
 }
 
-/* Sync registration/login with Netlify Function backend (/api/auth/*) when available */
-function syncBackendAuth(endpoint, payload){
-  try {
-    if (typeof fetch === "function" && global.location && /^https?:/i.test(global.location.protocol)){
-      fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      }).then(function(r){ return r.json(); }).then(function(data){
-        if (data && data.session && data.session.token && session){
-          session.serverToken = data.session.token;
-          persistSession(session);
-        }
-      }).catch(function(){});
-    }
-  } catch (e) {}
-}
-
 var AuthService = {
   mode: "B",
   modeLabel: "Demo sign-in (Mode B) — simulated access for demonstration only.",
@@ -531,17 +513,6 @@ var AuthService = {
     syncUserProfileState(name, email, phone, country);
     try { global.AdminConfig.audit("user.sign-up", "session", email, "ok"); } catch(e){}
 
-    /* Sync with Netlify Function backend */
-    syncBackendAuth("/api/auth/register", {
-      access_code: accessCode,
-      full_name: name,
-      email: email,
-      phone: phone,
-      country: country,
-      password: password,
-      confirm_password: confirmPassword,
-      idempotency_key: idempKey || ("reg_" + userId)
-    });
 
     try {
       if (global.NotificationHub && typeof global.NotificationHub.addNotification === "function"){
@@ -700,7 +671,6 @@ var AuthService = {
     };
     persistSession(session);
     syncUserProfileState(acc.name, acc.email, acc.phone, acc.country);
-    syncBackendAuth("/api/auth/login", { email: acc.email, password: pwd });
 
     return { ok:true, session:AuthService.session() };
   },
@@ -711,7 +681,7 @@ var AuthService = {
 
   token: function(){
     var s = AuthService.session();
-    return s ? (s.serverToken || s.token) : null;
+    return s ? s.token : null;
   },
 
   /* Typed password staff sign-in with salted hash comparison & Demo Mode check */
@@ -772,14 +742,13 @@ var AuthService = {
     persistSession(session);
     syncUserProfileState(acc.name, acc.email);
     AuthService.watchInactivity();
-    syncBackendAuth("/api/auth/staff-login", { email: acc.email, password: password });
 
     return { ok:true, session:AuthService.session() };
   },
 
   signOut: function(){
     var was = session ? session.email : null;
-    var tok = session ? (session.serverToken || session.token) : null;
+    var tok = session ? session.token : null;
     session = null;
     persistSession(null);
     AuthService.stopInactivityWatch();

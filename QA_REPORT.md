@@ -10,4 +10,4 @@
     3. **Direct Bank Transfers**: **JPMorgan Chase** (`USD` Fedwire/ACH), **City Bank PLC** (`BDT` NPSB/BEFTN), and **ICBC** (`CNY` UnionPay CNAPS).
   - **Instant Cross-Asset & Crypto-to-Fiat Swap**: Convert between any fiat or crypto balance using `FinancialEngine.convert()` with 0.20% spread.
   - **High-Yield Vault Staking (`5.50% – 8.20% APY`)**: Lock & unlock any asset for 30, 90, or 180 days with real-time available vs. locked balance tracking.
-  - **Supabase SQL Schema & Server API**: Full `wallets`, `wallet_balances`, `crypto_deposit_addresses`, `wallet_transactions`, and `vault_allocations` tables in `supabase/schema.sql`, plus `POST /api/wallet/crypto-address` and `POST /api/wallet/webhook/inbound` in `server/api.js`.
+  - **Wallet & Vault demo state**: `wallets`, `wallet_balances`, `crypto_deposit_addresses`, `wallet_transactions`, and `vault_allocations` tracked in client demo state (no backend, no cloud database).
