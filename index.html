@@ -1,55 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Probaho Remit — AI Cross-border Finance Copilot (Demo)</title>
-  <meta name="description" content="Probaho Remit — demo prototype of an AI financial participant that moves money across borders the cheapest, safest way possible. 2026 Shenzhen International FinTech Competition, Topic C.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/design-system.css">
-  <link rel="stylesheet" href="css/shell.css">
-  <link rel="stylesheet" href="css/optimizer.css">
-  <link rel="stylesheet" href="css/scamshield.css">
-  <link rel="stylesheet" href="css/fx.css">
-  <link rel="stylesheet" href="css/tuition.css">
-  <link rel="stylesheet" href="css/copilot.css">
-  <link rel="stylesheet" href="css/vault.css">
+<script>
+(function(){
+  try {
+    var t = "__probaho_test__";
+    window.localStorage.setItem(t, "1");
+    window.localStorage.removeItem(t);
+  } catch (e) {
+    var mem = {};
+    var fakeStorage = {
+      getItem: function(k){ return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null; },
+      setItem: function(k, v){ mem[k] = String(v); },
+      removeItem: function(k){ delete mem[k]; },
+      clear: function(){ mem = {}; }
+    };
+    try { Object.defineProperty(window, "localStorage", { value: fakeStorage, configurable: true }); } catch (_) {}
+    try { Object.defineProperty(window, "sessionStorage", { value: fakeStorage, configurable: true }); } catch (_) {}
+  }
+})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Probaho Remit — Titan Edition. A global, explainable cross-border finance platform supporting 18+ corridors, 12+ currencies, and on-device AI assistance. All data is synthetic.">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#0b1324">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<link rel="manifest" href="manifest.json">
+<title>Probaho Remit · Titan Edition — Global Cross-Border Finance &amp; AI Participant</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/modules.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/theme-titan-blue.css">
+<link rel="stylesheet" href="css/custom-titan.css">
+<link rel="stylesheet" href="css/luxury-skins.css">
+<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/print.css" media="print">
 </head>
 <body>
-  <header class="nav">
-    <div class="nav-inner">
-      <a class="brand" href="#/">Probaho <span>Remit</span></a>
-      <span class="badge-demo">Demo</span>
-      <nav class="nav-links" aria-label="Primary">
-        <a href="#/" data-route="">Home</a>
-        <a href="#/optimizer" data-route="optimizer">Optimizer</a>
-        <a href="#/scamshield" data-route="scamshield">ScamShield</a>
-        <a href="#/fx" data-route="fx">FX Advisor</a>
-        <a href="#/tuition" data-route="tuition">Tuition</a>
-        <a href="#/copilot" data-route="copilot">Ask Probaho</a>
-        <a href="#/vault" data-route="vault">Vault</a>
+<a class="skip-link" href="#view">Skip to content</a>
+<div id="fatal" role="alert" style="display:none;background:#8E2418;color:#fff;padding:12px 18px;font-size:13px;font-weight:600"></div>
+
+<aside class="app-sidebar" id="appSidebar" aria-label="Sidebar navigation">
+  <div class="app-sidebar-head">
+    <a class="app-sidebar-brand" href="#/dashboard">
+      <span class="app-sidebar-logo" aria-hidden="true">P</span>
+      <span>
+        <span class="app-sidebar-title">PROBAHO <em>REMIT</em></span>
+        <span class="app-sidebar-sub">Cross-border. Closer to your goals.</span>
+      </span>
+    </a>
+  </div>
+  <nav class="app-sidebar-nav" id="appSidebarNav" aria-label="Main"></nav>
+  <div class="app-sidebar-foot">
+    &ldquo;Better finances.<br>Bigger dreams.&rdquo;
+  </div>
+</aside>
+<header class="site-header">
+  <div class="header-inner">
+    <button class="hamburger" id="hamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="drawer"><span></span></button>
+    <a class="brand" href="#/" aria-label="Probaho Remit home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c3.2 0 4.8-2.4 6.2-5.2C11.6 7 13.2 5 16 5"/><path d="M13 5h3v3"/><path d="M20 9c-3.2 0-4.8 2.4-6.2 5.2C12.4 17 10.8 19 8 19"/><path d="M11 19H8v-3"/></svg>
+      </span>
+      <span>Probaho Remit<small>Titan Edition</small></span>
+    </a>
+    <div class="header-global-search" id="headerGlobalSearchWrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="search" id="headerGlobalSearchInput" placeholder="Search transactions, beneficiaries, or anything..." aria-label="Search transactions, beneficiaries, or anything">
+    </div>
+    <nav class="main-nav" id="mainNav" aria-label="Primary"></nav>
+    <div class="header-actions">
+      <a href="#/help" class="btn btn-ghost btn-sm" id="btnHeaderHelp" title="Help & Support" style="display:none;color:#475569;font-weight:650;">❓ <span class="hdr-btn-txt">Help</span></a>
+      <button type="button" class="btn btn-secondary btn-sm" id="btnGlobalCommand" onclick="if(window.GlobalCommand) GlobalCommand.open();" title="Global Search, 22-Currency Converter &amp; 8 Languages (Ctrl+K)" style="display:none;">🔍 <span class="hdr-btn-txt">Quick Convert</span></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="langToggleBtn" title="Switch Language (8 Global Languages)">🌐 <span id="langLabel">বাংলা</span></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="btnOpenNotifications" onclick="if(window.NotificationHub && typeof window.NotificationHub.openModal === 'function'){ window.NotificationHub.openModal('all'); } else { location.hash = '#/notifications'; }" title="Notifications &amp; Upcoming Payment Reminders" style="display:inline-flex;position:relative;">🔔 <span class="hdr-btn-txt">Alerts</span><span id="notifHeaderBadge" style="display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;background:#ef4444;color:#fff;border-radius:999px;font-size:10px;font-weight:800;margin-left:4px;padding:0 4px;">2</span></button>
+      <button type="button" class="btn btn-secondary btn-sm" id="btnOpenCustomizer" onclick="if(window.Customizer) Customizer.openModal();" title="Design Customizer" style="display:none;">🎨 <span class="hdr-btn-txt">Theme</span></button>
+      <div id="headerAuthTools" style="display:flex;align-items:center;gap:6px;"></div>
+      <button class="btn btn-ghost btn-sm" id="headerSignout" style="display:none" aria-label="Sign out"></button>
+      <span class="demo-pill"><span class="badge badge-demo" title="Every rate, fee, provider and record in this product is synthetic demonstration data.">DEMO&nbsp;DATA</span></span>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer" aria-label="Mobile navigation">
+  <div class="drawer-head">
+    <span class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15c3.2 0 4.8-2.4 6.2-5.2C11.6 7 13.2 5 16 5"/><path d="M13 5h3v3"/><path d="M20 9c-3.2 0-4.8 2.4-6.2 5.2C12.4 17 10.8 19 8 19"/><path d="M11 19H8v-3"/></svg></span><span>Probaho<small>Titan Edition</small></span></span>
+    <button class="btn btn-secondary btn-sm" id="drawerClose">Close</button>
+  </div>
+  <nav id="drawerNav" aria-label="Mobile"></nav>
+  <div class="drawer-foot">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+      <button type="button" class="btn btn-secondary btn-sm" onclick="if(window.Customizer){window.Customizer.openModal();if(window.Router)window.Router.closeDrawer();}" style="width:100%;justify-content:center;">🎨 Theme</button>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="var b=document.getElementById('langToggleBtn');if(b)b.click();" style="width:100%;justify-content:center;">🌐 Language</button>
+    </div>
+    <button type="button" class="btn btn-secondary btn-sm" onclick="if(window.NotificationHub){window.NotificationHub.openModal();if(window.Router)window.Router.closeDrawer();}" style="width:100%;justify-content:center;margin-bottom:8px;">🔔 Notifications &amp; Reminders</button>
+    <button type="button" class="btn btn-secondary btn-sm" id="drawerSignoutBtn" onclick="var b=document.getElementById('headerSignout');if(b)b.click();" style="width:100%;justify-content:center;margin-bottom:10px;color:#dc2626;border-color:#fecaca;background:#fef2f2;">Sign Out</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+      <span class="badge badge-demo">DEMO&nbsp;DATA</span>
+      <span class="tiny muted" id="deviceDetectBadge">⚡ Auto-Fit</span>
+    </div>
+  </div>
+</aside>
+
+<main class="page" id="view" tabindex="-1" aria-live="off"></main>
+
+<nav class="mobile-tabs" id="mobileTabs" aria-label="Quick navigation">
+  <a href="#/dashboard"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg></span><span>Dashboard</span></a>
+  <a href="#/student-journey"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span>Journey</span></a>
+  <a href="#/send"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span><span>Send</span></a>
+  <a href="#/payment-vault"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="3"/><path d="M3 10.5h18"/><circle cx="12" cy="14.5" r="1.6"/></svg></span><span>Vault</span></a>
+  <a href="#/copilot"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v1H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-3V5a3 3 0 0 0-3-3z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg></span><span>Copilot</span></a>
+  <button type="button" class="mobile-tab-menu-btn" onclick="var h=document.getElementById('hamburger');if(h)h.click();" aria-label="Open all modules menu"><span class="mt-ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></span><span>Menu</span></button>
+</nav>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-disc">
+      <b>Simulation disclosure.</b> Probaho Remit — Titan Edition is an educational demonstration built for the 2026 Shenzhen
+      International FinTech Competition (International Track, Topic C). Rates, fees, provider comparisons, FX history, AI responses
+      and risk scores are <b>illustrative synthetic data</b> — not live financial offers. No money is moved, and no payment
+      instructions are verified with a bank or university. Independently confirm recipient details and obtain current quotes from
+      authorised providers before making a real payment. A risk score is not proof of fraud; a draft is not a transfer.
+    </div>
+    <div class="footer-meta">
+      <span>Probaho Remit · Titan Edition · Global Cross-Border Demo Build</span>
+      <nav aria-label="Footer" style="display:flex;gap:14px;flex-wrap:wrap;">
+        <a href="#/student-journey">Student Journey</a>
+        <a href="#/notifications">Notifications</a>
+        <a href="#/sign-up">Create Account</a>
+        <a href="#/corridor-optimizer">Optimizer</a>
+        <a href="#/fees">Fees</a>
+        <a href="#/corridors">Corridors</a>
+        <a href="#/fx-advisor">FX Advisor</a>
+        <a href="#/scamshield">ScamShield</a>
+        <a href="#/tuition-planner">Tuition</a>
+        <a href="#/evaluation">Evaluation</a>
+        <a href="#/terms">Terms</a>
+        <a href="#/privacy">Privacy</a>
+        <a href="#/refunds">Refunds</a>
+        <a href="#/cookies">Cookies</a>
+        <a href="#/help">Support</a>
       </nav>
     </div>
-  </header>
+  </div>
+</footer>
 
-  <main id="app"></main>
+<div id="modalRoot"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div><b>Probaho Remit</b> — demo prototype by Team Probaho · 2026 Shenzhen International FinTech Competition, International Track · Topic C: Cross-border &amp; Student Finance Assistant</div>
-      <div>All figures are synthetic DEMO DATA. No real money moves.</div>
-    </div>
-  </footer>
+<noscript><p style="padding:40px;text-align:center">Probaho Remit — Titan Edition needs JavaScript to run its interactive demo modules.</p></noscript>
 
-  <script src="js/data.js"></script>
-  <script src="js/optimizer.js"></script>
-  <script src="js/scamshield.js"></script>
-  <script src="js/fx.js"></script>
-  <script src="js/tuition.js"></script>
-  <script src="js/copilot.js"></script>
-  <script src="js/vault.js"></script>
-  <script src="js/app.js"></script>
+<!-- Config + seeded data -->
+<script src="js/config/demo-config.js"></script>
+<script src="data/corridors.js"></script>
+<script src="data/providers.js"></script>
+<script src="data/fx-history.js"></script>
+<script src="data/tuition-demo.js"></script>
+<script src="data/ledger.js"></script>
+<script src="data/payout-routes.js"></script>
+<script src="data/kyc-demo.js"></script>
+<script src="data/users-demo.js"></script>
+<script src="data/audit-demo.js"></script>
+<script src="data/rates-demo.js"></script>
+<script src="data/documents-demo.js"></script>
+<script src="data/scam-alerts.js"></script>
+<!-- Core -->
+<script src="js/utils.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/state.js"></script>
+<!-- Auth (Mode B demo sign-in) + admin override layer -->
+<script src="js/auth/auth-service.js"></script>
+<script src="js/admin/config.js"></script>
+<!-- Deterministic engines (DOM-free, unit-testable) -->
+<script src="js/financial-engine.js"></script>
+<script src="js/risk-engine.js"></script>
+<script src="js/fx-engine.js"></script>
+<!-- Shared UI & AI Services -->
+<script src="js/components/modal.js"></script>
+<script src="js/components/toast.js"></script>
+<script src="js/components/chart.js"></script>
+<script src="js/components/customizer.js"></script>
+<script src="js/components/global-command.js"></script>
+<script src="js/components/notifications.js"></script>
+<script src="js/services/local-llm.js"></script>
+<script src="js/components/floating-copilot.js"></script>
+<!-- Modules -->
+<script src="js/modules/home.js"></script>
+<script src="js/modules/fees.js"></script>
+<script src="js/modules/corridors.js"></script>
+<script src="js/modules/legal.js"></script>
+<script src="js/modules/dashboard.js"></script>
+<script src="js/modules/send.js"></script>
+<script src="js/modules/beneficiaries.js"></script>
+<script src="js/modules/kyc.js"></script>
+<script src="js/modules/settings.js"></script>
+<script src="js/modules/corridor-optimizer.js"></script>
+<script src="js/modules/rates.js"></script>
+<script src="js/modules/scamshield.js"></script>
+<script src="js/modules/fx-advisor.js"></script>
+<script src="js/modules/tuition-planner.js"></script>
+<script src="js/modules/copilot.js"></script>
+<script src="js/modules/payment-vault.js"></script>
+<script src="js/modules/help.js"></script>
+<script src="js/modules/signin.js"></script>
+<script src="js/modules/public-signin.js"></script>
+<script src="js/modules/signup.js"></script>
+<script src="js/modules/users.js"></script>
+<script src="js/modules/transactions.js"></script>
+<script src="js/modules/analytics.js"></script>
+<script src="js/modules/architecture.js"></script>
+<script src="js/modules/design-studio.js"></script>
+<script src="js/modules/student-journey.js"></script>
+<script src="js/modules/evaluation.js"></script>
+<!-- Admin console -->
+<script src="js/admin/admin-login.js"></script>
+<script src="js/admin/admin-app.js"></script>
+<script src="js/admin/admin-content.js"></script>
+<script src="js/admin/admin-corridors.js"></script>
+<script src="js/admin/admin-providers.js"></script>
+<script src="js/admin/admin-fx.js"></script>
+<script src="js/admin/admin-rules.js"></script>
+<script src="js/admin/admin-tuition.js"></script>
+<script src="js/admin/admin-vault.js"></script>
+<script src="js/admin/admin-kyc.js"></script>
+<script src="js/admin/admin-payout.js"></script>
+<script src="js/admin/admin-reports.js"></script>
+<script src="js/admin/admin-users.js"></script>
+<script src="js/admin/admin-audit.js"></script>
+<script src="js/admin/admin-settings.js"></script>
+<!-- Shell -->
+<script src="js/router.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
