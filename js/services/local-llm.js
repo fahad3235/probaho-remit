@@ -18,7 +18,6 @@ var U = global.U || {
    ============================================================ */
 var OPENROUTER_CONFIG = {
   endpoint: "https://openrouter.ai/api/v1/chat/completions",
-  proxyEndpoint: "/.netlify/functions/copilot-chat",
   defaultModel: "nvidia/nemotron-3-ultra-550b-a55b",
   fallbackModels: [
     "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -1113,7 +1112,7 @@ async function callOpenRouterNemotron(promptText, opts, localBaselineReply){
         headers: {
           "Authorization": "Bearer " + apiKey,
           "Content-Type": "application/json",
-          "HTTP-Referer": (global.location && global.location.origin && global.location.origin !== "null") ? global.location.origin : "https://probaho-remit.netlify.app",
+          "HTTP-Referer": (global.location && global.location.origin && global.location.origin !== "null") ? global.location.origin : "https://fahad3235.github.io/probaho-remit/",
           "X-Title": "Probaho Remit — Titan Edition Copilot+"
         },
         body: JSON.stringify({
