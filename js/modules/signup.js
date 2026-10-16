@@ -1,6 +1,6 @@
 /* signup.js — PROBAHO REMIT Student Registration & Account Creation Module (#/sign-up & #/signup).
    - High-Security Account Creation: Salting + 1,000-iteration client hashing.
-   - Saves to localStorage (probaho_registered_users_v1) so newly registered accounts persist across reloads & Netlify deploys.
+   - Saves to localStorage (probaho_registered_users_v1) so newly registered accounts persist across reloads & redeploys.
    - Live interactive password strength meter + double-confirmation matching validation.
    - Seamless sign-in redirect and Demo Reference callout (Student ishan@probaho.demo / Admin owner@probaho.demo · demo1234). */
 (function(global){
