@@ -1,16 +1,109 @@
-# Dependencies
-node_modules/
-package-lock.json
+# =====================================================================
+# PROBAHO REMIT — PRODUCTION SECURITY & COMPLIANCE .GITIGNORE
+# Strict exclusion rules modeled after enterprise fintech standards (Upay-AI)
+# Prevents exposure of secrets, backend credentials, database files,
+# private uploads, build archives, logs, and development artifacts.
+# =====================================================================
 
-# Environment variables & secrets
+# 1. Environment Secrets & Credentials
 .env
-.env.local
+.env.*
+!.env.example
+*.env
 *.pem
 *.key
+*.cert
+*.crt
+*.pfx
+*.p12
+*.csr
+id_rsa*
+id_ed25519*
+secrets/
+credentials.json
+service-account*.json
+token.json
+session.key
 
-# Temporary extraction & scratch directories
-extracted_fixed_13/
-extracted_temp/
+# 2. Database Engines, Storage & Backup Dumps
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sql.bak
+*.sql.gz
+*.dump
+*.rdb
+database/
+data/private/
+data/backups/
+server/db_storage/
+server/data/
+server/storage/
+server/uploads/
+.supabase/
+supabase/.temp/
+
+# 3. Server Runtime, Logs & System PID Files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+pids/
+*.pid
+*.seed
+*.pid.lock
+.clinic/
+coverage/
+.nyc_output/
+
+# 4. Dependency Directories
+node_modules/
+package-lock.json
+jspm_packages/
+web_modules/
+
+# 5. Netlify, Cloud & Platform Build Artifacts
+.netlify/
+.netlify/*
+netlify-state.json
+.serverless/
+.vercel/
+.cloudflare/
+.wrangler/
+dist/
+build/
+out/
+.cache/
+.parcel-cache/
+
+# 6. Production Packages & Binary Archives
+# (Large archives must not be committed to GitHub; deploy via Netlify Drop or CI)
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.iso
+
+# 7. Private Media, Documents & KYC Uploads
+uploads/
+private_vault/
+kyc_documents/
+*.jpeg
+*.jpg
+*.png
+*.pdf
+!docs/**
+
+# 8. Temporary Extraction, Verification & Scratch Scripts
+extracted_*/
 scratch/
 .system_generated/
 .tempmediaStorage/
@@ -20,21 +113,20 @@ check-missing.js
 test-*.js
 test-*.ps1
 package-netlify-posix.ps1
-probaho-remit-titan-edition (1).zip
 
-# OS and IDE files
+# 9. Operating System & Editor Artifacts
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+desktop.ini
 *.swp
-*.tmp
-.vscode/
+*.swo
+*~
 .idea/
-
-# Large test media
-*.jpeg
-*.jpg
-*.png
-*.pdf
-
-# Allow project documentation images if any
-!docs/**
+.vscode/
+*.sublime-project
+*.sublime-workspace

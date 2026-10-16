@@ -29,22 +29,16 @@ var OPENROUTER_CONFIG = {
     "openrouter/free",
     "openrouter/auto"
   ],
-  apiKey: (function(str){
-    if (typeof atob === "function") return atob(str);
-    if (typeof Buffer !== "undefined") return Buffer.from(str, "base64").toString("utf8");
-    var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", out = "", i = 0;
-    str = String(str).replace(/[^A-Za-z0-9+/=]/g, "");
-    while (i < str.length){
-      var e1 = chars.indexOf(str.charAt(i++)), e2 = chars.indexOf(str.charAt(i++)), e3 = chars.indexOf(str.charAt(i++)), e4 = chars.indexOf(str.charAt(i++));
-      out += String.fromCharCode((e1 << 2) | (e2 >> 4));
-      if (e3 !== 64) out += String.fromCharCode(((e2 & 15) << 4) | (e3 >> 2));
-      if (e4 !== 64) out += String.fromCharCode(((e3 & 3) << 6) | e4);
-    }
-    return out;
-  })("c2stb3ItdjEtYzdjNmYzNzEwNGQxNTNjYzJkNzc0MGE5Nzc5NDI4NTA4ZGRiOTJkMjIxZjU5M2JlZjJlNDAzNDkyZDIyMzFmMQ=="),
+  apiKey: (function(){
+    try {
+      if (typeof window !== "undefined" && window.PROBAHO_OPENROUTER_KEY) return String(window.PROBAHO_OPENROUTER_KEY).trim();
+      if (typeof localStorage !== "undefined" && localStorage.getItem("probaho_openrouter_key")) return String(localStorage.getItem("probaho_openrouter_key")).trim();
+    } catch(e){}
+    return "";
+  })(),
   modelPage: "https://openrouter.ai/nvidia/nemotron-3-ultra-550b-a55b",
   docsUrl: "https://openrouter.ai/docs/api/api-reference/chat/create-a-chat-completion",
-  lastUsage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0, cost: 0, latencyMs: 0, status: "CONNECTED" }
+  lastUsage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0, cost: 0, latencyMs: 0, status: "READY" }
 };
 
 var MODEL_REGISTRY = {

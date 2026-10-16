@@ -124,14 +124,15 @@ npm install # Optional: package-less server.js runs directly with native Node.js
 
 ## 6. Environment Variables
 
-The project includes a documented template at [`.env.example`](.env.example). The following variables can be configured:
-
 | Variable Name | Purpose | Example / Placeholder Value |
 |---|---|---|
 | `NODE_ENV` | Application environment mode | `development` / `production` |
 | `PORT` | Local development server port | `3000` |
 | `SUPABASE_URL` | Supabase API URL (if connecting cloud backend) | `https://[YOUR_SUPABASE_PROJECT].supabase.co` |
 | `SUPABASE_ANON_KEY` | Public anonymous client API key | `[YOUR_SUPABASE_ANON_KEY]` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Backend administrative access key | `[YOUR_SUPABASE_SERVICE_ROLE_KEY]` |
+| `PROBAHO_SESSION_SECRET` | Secret HMAC seed for backend session tokens | `[YOUR_SECURE_RANDOM_SESSION_SECRET]` |
+| `OPENROUTER_API_KEY` | Optional cloud LLM key for live OpenRouter API | `[YOUR_OPENROUTER_API_KEY]` |
 | `BASIC_KYC_DAILY_LIMIT` | Daily transaction limit for basic KYC | `50000` |
 | `FULL_KYC_DAILY_LIMIT` | Daily transaction limit for verified students | `500000` |
 

@@ -4,7 +4,7 @@
  * Primary Model: nvidia/nemotron-3-ultra-550b-a55b + automatic multi-model fallback
  * Endpoint: POST https://openrouter.ai/api/v1/chat/completions
  */
-const DEFAULT_OR_KEY = process.env.OPENROUTER_API_KEY || Buffer.from("c2stb3ItdjEtYzdjNmYzNzEwNGQxNTNjYzJkNzc0MGE5Nzc5NDI4NTA4ZGRiOTJkMjIxZjU5M2JlZjJlNDAzNDkyZDIyMzFmMQ==", "base64").toString("utf8");
+const DEFAULT_OR_KEY = process.env.OPENROUTER_API_KEY || "";
 const FALLBACK_MODELS = [
   "nvidia/nemotron-3-ultra-550b-a55b",
   "nvidia/nemotron-3-ultra-550b-a55b:free",
@@ -34,6 +34,21 @@ exports.handler = async function(event) {
   try {
     const body = JSON.parse(event.body || "{}");
     const apiKey = body.apiKey || DEFAULT_OR_KEY;
+
+    if (!apiKey) {
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          choices: [{
+            message: {
+              role: "assistant",
+              content: "Probaho Copilot is operating in secure local simulation mode. To enable external cloud AI models, configure `OPENROUTER_API_KEY` in Netlify Environment Variables."
+            }
+          }]
+        })
+      };
+    }
     const requestedModel = body.model || FALLBACK_MODELS[0];
     const modelsToTry = [requestedModel].concat(FALLBACK_MODELS.filter(m => m !== requestedModel));
 
