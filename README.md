@@ -1,26 +1,254 @@
-# Probaho Remit
+# Probaho Remit — Titan Edition
+> **2026 Shenzhen International FinTech Competition (AI DEV FEST 2026)**  
+> *International Track · Topic C: AI as a Financial Participant*
 
-**An AI financial participant that moves money across borders the cheapest, safest way possible.**
+[![Live Demo](https://img.shields.io/badge/Live_Demo-TryCloudflare-10b981?style=for-the-badge&logo=cloudflare)](https://producers-liquid-shortcuts-courage.trycloudflare.com)
+[![Netlify](https://img.shields.io/badge/Netlify-Ready-00C7B7?style=for-the-badge&logo=netlify)](https://app.netlify.com/drop)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
-Demo MVP built for the **2026 Shenzhen International FinTech Competition (FinTechathon)** — International Track, **Topic C: Cross-border & Student Finance Assistant**. Theme: *"AI as a Financial Participant."*
+---
 
-> **All data in this demo is synthetic and seeded (deterministic). No real money moves anywhere.**
+## 1. Project Overview
 
-## What's inside
+### 1.1 The Problem Addressed
+International students and cross-border families face severe financial friction:
+1. **Exorbitant & Hidden Fees**: Traditional remittance providers bury high margins inside opaque foreign exchange (FX) markups and tiered transfer fees.
+2. **Tuition Deadlines & University Compliance**: Overseas students struggle to coordinate multi-year tuition payments with strict university disbursement schedules and fluctuating foreign exchange rates.
+3. **Escalating Scams & Fraud**: International students are prime targets for tuition payment scams, fake agency spoofing, and predatory money transfer schemes.
+4. **Opaque & Fragmented Transfers**: Lack of real-time explainability leaves remitters uncertain about intermediate bank fees, settlement times, and regulatory compliance requirements.
 
-| Module | What it does |
-|---|---|
-| Corridor Optimizer | Compares 5 synthetic providers across 4 corridors (fee + FX spread + speed), highlights the best deal, drafts a demo transfer |
-| ScamShield | Deterministic fraud-risk scorer (0–100) with plain-language reasons for any payment instruction |
-| FX Timing Advisor | Seeded 90-day rate chart with 7-day moving average and SEND NOW / WAIT / HOLD signal |
-| Tuition Planner | Deadlines, document checklist, and BDT budget tracker for students abroad |
-| Ask Probaho | Deterministic copilot answering corridor/fee/safety questions (optional session-only Gemini key, never persisted) |
-| Payment Vault | Seeded ledger of demo transfers with receipt details |
+### 1.2 Proposed Solution
+**Probaho Remit (Titan Edition)** is an intelligent, explainable cross-border financial participant platform engineered specifically for international students and their families. It acts as an autonomous financial co-pilot that:
+- Optimizes remittance routes across 18+ corridors and 12+ currencies.
+- Projects 4-year tuition schedules with predictive currency hedging models.
+- Employs an on-device heuristic AI risk scoring engine (**ScamShield**) to protect remitters from tuition and transfer fraud.
+- Delivers an explainable, deterministic AI assistant (**Ask Probaho Copilot**) that answers cross-border financial queries without external data leakage.
 
-## Run it
+### 1.3 Purpose of the Project
+Built as a competition-grade demonstration for the **2026 Shenzhen International FinTech Competition**, Probaho Remit proves how AI can participate responsibly and safely in cross-border consumer finance with transparent risk controls, strict privacy, and zero hallucinated financial advice.
 
-Static site — no build step, no server needed. Open `index.html` in a browser, or serve the folder with any static server.
+> **Simulation Disclosure**: Probaho Remit is an educational simulation. Rates, fees, provider comparisons, FX history, AI responses, and risk scores are illustrative synthetic demonstration data. No real funds are moved.
 
-## Team
+---
 
-Team Probaho — Inter-University AI Dev Fest 2026 (20th of 132).
+## 2. Features & AI Implementation
+
+### 2.1 Complete Screen & Module Catalogue
+
+| # | Screen / Module | Route | Purpose & Key Features |
+|---|---|---|---|
+| 1 | **Public Landing Page** | `#/home` | Cosmic hero banner, instant remittance calculator ($1,000 USD → 119,480 BDT), partner university badges, live rate previews. |
+| 2 | **User Dashboard** | `#/dashboard` | 4 KPI summary cards (Users, Transactions, Volume, Active Users), SVG trend lines, 4-slice distribution donut, and recent transfers ledger. |
+| 3 | **Corridor Optimizer** | `#/corridor-optimizer` | 4-step wizard comparing WorldRemit, Wise, Remitly, and Western Union with transparent fee and speed breakdowns. |
+| 4 | **Tuition Planner** | `#/tuition-planner` | University degree tuition tracker (e.g. U of Toronto CS), 4-year multi-currency cost projector, funding progress radial meter. |
+| 5 | **ScamShield Risk Engine** | `#/scamshield` | 0–100 security score meter, pattern-matching scam text analyzer, safety tips, and live scam alert feeds. |
+| 6 | **FX Advisor & Board** | `#/rates` | 7-currency live exchange rate board, 90-day interactive SVG rate trajectory, volatility indicators, and optimal transfer timing hints. |
+| 7 | **Payment & Document Vault** | `#/payment-vault` | Encrypted synthetic credential vault (Passport, National ID, Visa, Admission Letter) with mock verification status. |
+| 8 | **Ask Probaho Copilot** | `#/ask-probaho` & `#/copilot` | Context-aware AI financial assistant with pre-configured prompts, transfer action triggers, and corridor explanations. |
+| 9 | **Notification Center** | `#/notifications` | Filterable notification and payment reminders hub (All, Rates, KYC, Reminders, Security) with badge counters. |
+| 10 | **Student Registration** | `#/sign-up` | Self-service student registration with 5-criteria real-time password strength meter and instant dashboard login. |
+| 11 | **Student Sign-In** | `#/sign-in` | Clean split-screen authentication with manual credential entry enforcement and rate-limited security protections. |
+| 12 | **Dedicated Admin Login** | `#/admin/login` | Air-gapped dark console login for platform administrators with 5-attempt brute-force lockout (15-minute freeze). |
+| 13 | **Administrator Console** | `#/admin` | High-security administrative command center for volume tracking, KYC queue triage, and audit trail inspection. |
+| 14 | **KYC Verification Queue** | `#/admin/kyc` | Administrative document review workflow with approve/reject actions and risk-tier badge indicators. |
+| 15 | **Audit Trail Explorer** | `#/admin/audit` | Tamper-evident administrative action logs tracking actor IDs, timestamps, IP addresses, and state diffs. |
+| 16 | **Platform Settings** | `#/admin/settings` | Operational controls for corridor limits, maintenance mode toggles, and notification dispatches. |
+| 17 | **Transactions Ledger** | `#/transactions` | Full ledger with multi-column filtering, search, date range picking, and CSV export. |
+| 18 | **Analytics Engine** | `#/analytics` | Service volume breakdown, revenue analytics, conversion funnels, and payout method distribution. |
+| 19 | **Architecture Blueprint** | `#/architecture` | Interactive system architecture diagrams covering client layers, API design, database schemas, and AI pipelines. |
+| 20 | **Design Studio** | `#/design-studio` | Live skin switcher with 4 aesthetic themes: Titan Blue, Obsidian Dark, Emerald Green, and Warm Sand. |
+
+### 2.2 How AI Components Are Implemented
+Probaho Remit implements AI across three specialized layers:
+
+1. **On-Device Financial Reasoning Engine (`js/services/local-llm.js`)**:
+   - Runs deterministic, client-side semantic inference with zero external API dependencies.
+   - Parses intent for transfer queries, tuition advice, and rate explanations without transmitting sensitive student data to third-party cloud LLMs.
+   - Generates actionable interactive buttons inside the chat stream (e.g., `[Initiate Transfer to Bangladesh]`, `[Compare Rates]`).
+
+2. **ScamShield Heuristic Risk Engine (`js/risk-engine.js`)**:
+   - Analyzes transfer memos, payment requests, and communication patterns for common fraud signatures (e.g., impersonation of visa officials, urgency coercion, unverified bank accounts).
+   - Computes an explainable risk score (0–100) with detailed contributing factors and preventative guidance.
+
+3. **Predictive FX & Volatility Engine (`js/fx-engine.js`)**:
+   - Uses deterministic pseudo-random market walks (mulberry32 algorithm) to model real-world FX volatility across 18 corridors.
+   - Calculates 7-day volatility bands, spread efficiency ratings, and recommended conversion timing.
+
+---
+
+## 3. Technology Stack
+
+- **Core & Runtime**: HTML5, Vanilla JavaScript (ES6+), CSS3 with CSS Custom Properties (Design Tokens).
+- **Styling & Design System**: Custom Vanilla CSS Design System with responsive grid layouts, glassmorphism accents, luxury UI skins, and accessibility compliance.
+- **Backend Service (Optional Local/Cloud)**: Node.js (v18+) with standard HTTP/HTTPS modules, Express routing compatibility, and Netlify Functions support.
+- **Data Persistence**: In-memory deterministic mock state + browser `localStorage` and `sessionStorage` fallback layers.
+- **AI & Analytics**: Custom on-device Natural Language heuristic intent parser, statistical FX simulator, SVG chart vector engine.
+- **Security & RBAC**: Air-gapped role separation, client-side PBKDF2/SHA-256 simulation, brute-force rate limiter, CSP/X-Frame-Options/X-Content-Type headers.
+- **Hosting & Deployment**: Netlify Static Hosting, Cloudflare Quick Tunnels, Docker/Node container compatible.
+
+---
+
+## 4. Requirements & Prerequisites
+
+To run or develop the project locally:
+- **Node.js**: Version 18.0.0 or higher.
+- **Web Browser**: Any modern browser (Google Chrome 110+, Microsoft Edge 110+, Mozilla Firefox 110+, Safari 16+).
+- **Disk Space**: ~10 MB for source code and dependencies.
+- **Network**: Internet access is only required for live Cloudflare tunneling; all core functionality runs 100% offline.
+
+---
+
+## 5. Installation and Setup
+
+### 5.1 Clone the Repository
+```bash
+git clone https://github.com/fahad3235/probaho-remit.git
+cd probaho-remit
+```
+
+### 5.2 Environment Configuration
+Copy the provided environment template:
+```bash
+cp .env.example .env
+```
+*(No external secrets or API keys are required for the standalone demo; default values work out of the box).*
+
+### 5.3 Install Dependencies
+The application runs as a zero-dependency static application with an optional lightweight Node.js local development server:
+```bash
+# If running via Node.js local server
+npm install # Optional: package-less server.js runs directly with native Node.js
+```
+
+---
+
+## 6. Environment Variables
+
+The project includes a documented template at [`.env.example`](.env.example). The following variables can be configured:
+
+| Variable Name | Purpose | Example / Placeholder Value |
+|---|---|---|
+| `NODE_ENV` | Application environment mode | `development` / `production` |
+| `PORT` | Local development server port | `3000` |
+| `SUPABASE_URL` | Supabase API URL (if connecting cloud backend) | `https://[YOUR_SUPABASE_PROJECT].supabase.co` |
+| `SUPABASE_ANON_KEY` | Public anonymous client API key | `[YOUR_SUPABASE_ANON_KEY]` |
+| `BASIC_KYC_DAILY_LIMIT` | Daily transaction limit for basic KYC | `50000` |
+| `FULL_KYC_DAILY_LIMIT` | Daily transaction limit for verified students | `500000` |
+
+---
+
+## 7. Run and Build Commands
+
+### 7.1 Run Local Development Server
+```bash
+node server.js
+```
+The server will start at: `http://127.0.0.1:3000/`
+
+### 7.2 Run Without Server (Direct Browser)
+Because Probaho Remit is built as a zero-dependency client-side SPA, you can also open `index.html` directly in any web browser without running a server.
+
+### 7.3 Build Netlify POSIX-Compliant Package
+To generate a production-ready, Linux-compatible Netlify Drop package:
+```powershell
+powershell -ExecutionPolicy Bypass -File package-netlify.ps1
+```
+This generates `probaho-remit-netlify.zip` with pure POSIX forward slashes (`/`), preventing Linux decompression 404 errors.
+
+---
+
+## 8. Live Deployment URLs
+
+Judges and evaluators can access the live application directly:
+
+- 🚀 **Primary Live Deployment**: [https://producers-liquid-shortcuts-courage.trycloudflare.com](https://producers-liquid-shortcuts-courage.trycloudflare.com)
+- 📦 **Netlify Deploy Ready**: Drop [`probaho-remit-netlify.zip`](probaho-remit-netlify.zip) directly into [app.netlify.com/drop](https://app.netlify.com/drop) for instant global edge deployment.
+
+---
+
+## 9. Testing Instructions & Feature Verification
+
+### 9.1 Automated Test Suites
+Run the automated syntax and feature verification suites included in the repository:
+
+```bash
+# 1. Verify JavaScript syntax integrity across all 136 codebase files
+node check-syntax.js
+
+# 2. Run automated feature & security verification suite
+node verify-features.js
+
+# 3. Verify Netlify archive asset integrity & POSIX paths
+node verify-zip-assets.js
+```
+
+**Expected Results**:
+- All 136 JavaScript files report zero syntax errors.
+- All 7 feature verification tests pass (100% success rate):
+  - Student manual authentication & session creation.
+  - Staff air-gapped authentication.
+  - Cross-portal unauthorized access rejection.
+  - Brute-force rate limiting & 15-minute lockout enforcement.
+  - Open student registration with local persistence.
+  - Notification Hub alerts listing & category filtering.
+  - Modal container rendering with multi-signature support.
+
+### 9.2 Interactive Manual Testing Guide
+
+#### A. Student Portal Manual Sign-In
+1. Navigate to: `#/sign-in`
+2. Enter the student credentials manually:
+   - **Email**: `ishan@probaho.demo`
+   - **Password**: `demo1234`
+3. Click **Sign In**.
+4. Verify redirection to `#/dashboard` and confirm that the floating **AI Copilot** widget becomes visible at the bottom right.
+
+#### B. Open Student Registration
+1. Navigate to: `#/sign-up`
+2. Enter any valid name, student email, and password.
+3. Observe the dynamic 5-point password strength meter.
+4. Click **Create Student Account**.
+5. Verify instant account creation and automatic login into the dashboard.
+
+#### C. Dedicated High-Security Admin Portal
+1. Navigate to: `#/admin/login`
+2. Verify the dark-themed high-security interface with the **"AIR-GAPPED SECURITY GATE"** banner.
+3. Attempt to enter student credentials (`ishan@probaho.demo`). Notice the explicit security denial.
+4. Enter authorized administrator credentials:
+   - **Email**: `owner@probaho.demo`
+   - **Password**: `demo1234`
+5. Click **Authorize & Access Portal**.
+6. Verify redirection to the protected administrator overview at `#/admin`.
+
+#### D. Notification & Alerts Hub
+1. Click the **🔔 Alerts** button in the top navigation bar or navigate to `#/notifications`.
+2. Verify the multi-tab interface (All, Rates, KYC, Reminders, Security).
+3. Switch categories and test marking alerts as read.
+
+---
+
+## 10. Other Configuration & Credentials
+
+### 10.1 Pre-Configured Demo Credentials
+
+| Portal | URL Route | Demo Email | Demo Password | Role & Permissions |
+|---|---|---|---|---|
+| **Student Portal** | `#/sign-in` | `ishan@probaho.demo` | `demo1234` | Verified Student; full access to transfers, tuition planner, scamshield, and AI copilot. |
+| **Open Student Sign Up** | `#/sign-up` | *(User choice)* | *(User choice)* | Newly created student accounts. |
+| **Admin Console** | `#/admin/login` | `owner@probaho.demo` | `demo1234` | Platform Owner / Auditor; full access to KYC queue, audit trails, and corridor controls. |
+
+### 10.2 Security & Air-Gap Configuration
+- **Credential Storage**: Passwords are validated using client-side salted SHA-256 hashes in demo mode.
+- **Brute-Force Lockout**: 5 failed consecutive attempts trigger an automatic 15-minute lock. A *"Reset Demo Lock"* button is available in demo mode for evaluators.
+- **Robots Directives**: Administrative views dynamically inject `<meta name="robots" content="noindex, nofollow, noarchive">` to prevent search engine indexing.
+- **Netlify Headers**: `netlify.toml` automatically applies `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, and `Referrer-Policy: strict-origin-when-cross-origin`.
+
+---
+
+## 11. Team & Hackathon Submission Metadata
+
+- **Competition**: 2026 Shenzhen International FinTech Competition (AI DEV FEST 2026)
+- **Track**: International Track
+- **Topic**: Topic C — *AI as a Financial Participant*
+- **Team**: Probaho FinTech Team
+- **Repository**: [https://github.com/fahad3235/probaho-remit](https://github.com/fahad3235/probaho-remit)
