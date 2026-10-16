@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QA Harness — Probaho Remit Titan (internal)</title>
+<link rel="stylesheet" href="../css/tokens.css">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/layout.css">
+<link rel="stylesheet" href="../css/components.css">
+<link rel="stylesheet" href="../css/modules.css">
+<link rel="stylesheet" href="../css/responsive.css">
+<style>#qa-results{white-space:pre-wrap;font-family:monospace;font-size:12px;padding:20px}</style>
+<link rel="stylesheet" href="../css/theme-titan-blue.css">
+</head>
+<body>
+<a class="skip-link" href="#view">Skip</a>
+<div id="fatal" style="display:none"></div>
+<header class="site-header"><div class="header-inner">
+  <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="drawer"><span></span></button>
+  <a class="brand" href="#/"><span class="brand-mark"></span><span>Probaho<small>Titan</small></span></a>
+  <nav class="main-nav" id="mainNav"></nav><div class="header-spacer"></div>
+  <button class="btn btn-ghost btn-sm" id="headerSignout" style="display:none" aria-label="Sign out"></button>
+  <span class="demo-pill"><span class="badge badge-demo">DEMO&nbsp;DATA</span></span>
+</div></header>
+<div class="drawer-bg" id="drawerBg"></div>
+<aside class="drawer" id="drawer"><div class="drawer-head"><span>x</span><button class="btn btn-secondary btn-sm" id="drawerClose">Close</button></div><nav id="drawerNav"></nav><div class="drawer-foot"></div></aside>
+<main class="page" id="view" tabindex="-1"></main>
+<nav class="mobile-tabs" id="mobileTabs" aria-label="Quick navigation">
+  <a href="#/home"><span class="mt-ic">H</span><span>Home</span></a>
+  <a href="#/send"><span class="mt-ic">S</span><span>Send</span></a>
+  <a href="#/scamshield"><span class="mt-ic">S</span><span>Shield</span></a>
+  <a href="#/payment-vault"><span class="mt-ic">V</span><span>Vault</span></a>
+  <a href="#/help"><span class="mt-ic">H</span><span>Help</span></a>
+</nav>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-disc">QA harness footer</div></div></footer>
+<div id="modalRoot"></div>
+<div class="toasts" id="toasts"></div>
+<pre id="qa-results">RUNNING…</pre>
+
+<script src="../js/config/demo-config.js"></script>
+<script src="../data/corridors.js"></script>
+<script src="../data/providers.js"></script>
+<script src="../data/fx-history.js"></script>
+<script src="../data/tuition-demo.js"></script>
+<script src="../data/ledger.js"></script>
+<script src="../data/payout-routes.js"></script>
+<script src="../data/kyc-demo.js"></script>
+<script src="../js/utils.js"></script>
+<script src="../js/storage.js"></script>
+<script src="../js/state.js"></script>
+<script src="../js/auth/auth-service.js"></script>
+<script src="../js/admin/config.js"></script>
+<script src="../js/financial-engine.js"></script>
+<script src="../js/risk-engine.js"></script>
+<script src="../js/fx-engine.js"></script>
+<script src="../js/components/modal.js"></script>
+<script src="../js/components/toast.js"></script>
+<script src="../js/components/chart.js"></script>
+<script src="../js/components/notifications.js"></script>
+<script src="../js/modules/home.js"></script>
+<script src="../js/modules/fees.js"></script>
+<script src="../js/modules/corridors.js"></script>
+<script src="../js/modules/legal.js"></script>
+<script src="../js/modules/dashboard.js"></script>
+<script src="../js/modules/send.js"></script>
+<script src="../js/modules/beneficiaries.js"></script>
+<script src="../js/modules/kyc.js"></script>
+<script src="../js/modules/settings.js"></script>
+<script src="../js/modules/corridor-optimizer.js"></script>
+<script src="../js/modules/rates.js"></script>
+<script src="../js/modules/scamshield.js"></script>
+<script src="../js/modules/fx-advisor.js"></script>
+<script src="../js/modules/tuition-planner.js"></script>
+<script src="../js/modules/copilot.js"></script>
+<script src="../js/modules/payment-vault.js"></script>
+<script src="../js/modules/help.js"></script>
+<script src="../js/modules/signin.js"></script>
+<script src="../js/modules/public-signin.js"></script>
+<script src="../js/modules/signup.js"></script>
+<script src="../js/admin/admin-app.js"></script>
+<script src="../js/admin/admin-content.js"></script>
+<script src="../js/admin/admin-corridors.js"></script>
+<script src="../js/admin/admin-providers.js"></script>
+<script src="../js/admin/admin-fx.js"></script>
+<script src="../js/admin/admin-rules.js"></script>
+<script src="../js/admin/admin-tuition.js"></script>
+<script src="../js/admin/admin-vault.js"></script>
+<script src="../js/admin/admin-kyc.js"></script>
+<script src="../js/admin/admin-payout.js"></script>
+<script src="../js/admin/admin-reports.js"></script>
+<script src="../js/admin/admin-users.js"></script>
+<script src="../js/admin/admin-audit.js"></script>
+<script src="../js/admin/admin-settings.js"></script>
+<script src="../js/router.js"></script>
+<script>
+"use strict";
+/* Real in-page QA: drives the actual app code with real DOM events and asserts outcomes. */
+(function(){
+var results = [], consoleErrors = [];
+window.addEventListener("error", function(e){
+  var src = "";
+  try { src = " @ " + String(e.filename || "").split("/").slice(-2).join("/") + ":" + (e.lineno || "?"); } catch (x){}
+  consoleErrors.push("error: " + (e.message||"unknown") + src);
+});
+window.addEventListener("unhandledrejection", function(e){ consoleErrors.push("rejection: " + String(e.reason)); });
+
+function t(name, cond, detail){
+  results.push({ name:name, pass:!!cond, detail: detail || "" });
+}
+function tick(ms){ return new Promise(function(r){ setTimeout(r, ms || 120); }); }
+function go(hash){ location.hash = hash; return tick(160); }
+function click(sel, root){
+  var el = (root||document).querySelector(sel);
+  if (!el) throw new Error("missing " + sel);
+  el.click();
+  return tick(80);
+}
+function viewText(){ return document.getElementById("view").textContent; }
+
+async function run(){
+  try {
+    /* clean slate */
+    AppStorage.clear();
+    AppState.resetDemo();
+    window.__xss = 0;
+    Router.init();
+    /* header sign-out wiring (mirrors js/app.js for the harness page) */
+    document.getElementById("headerSignout").addEventListener("click", function(){
+      var wasStaff = AuthService.isStaff();
+      var s = AuthService.session();
+      try { AdminConfig.audit("sign-out", "session", s ? s.email : "unknown", "ok"); } catch (e){}
+      AuthService.signOut();
+      document.body.classList.remove("admin-mode");
+      location.hash = wasStaff ? "#/sign-in" : "#/";
+    });
+    await tick(200);
+
+    /* 0 — site entry is the public sign-in */
+    t("entry shows public sign-in", viewText().indexOf("Welcome \u2014 sign in to explore") >= 0);
+    t("no nav links while signed out", document.querySelectorAll("#mainNav a").length === 0);
+    t("header sign-out hidden while signed out",
+      document.getElementById("headerSignout").style.display === "none");
+    await go("#/dashboard"); await tick(200);
+    t("protected route bounces to entry", location.hash === "#/" &&
+      viewText().indexOf("Welcome \u2014 sign in to explore") >= 0);
+    async function signInPublic(){
+      ModPublicSignIn.setRedirect(null); // clear the bounce-test redirect; land on home
+      await go("#/"); await tick(200);
+      await click(".demo-acct"); await tick(600); // one-tap sign-in (no typing)
+    }
+    await signInPublic();
+    t("public sign-in works", AuthService.signedIn() && !AuthService.isStaff());
+    t("public sign-in lands on home", location.hash === "#/home");
+    t("nav links appear after sign-in", document.querySelectorAll("#mainNav a").length >= 11);
+    t("header sign-out appears after sign-in",
+      document.getElementById("headerSignout").style.display !== "none");
+
+    /* 1 — landing */
+    t("landing renders hero", viewText().indexOf("Smarter Transfers. Safer Journeys. Brighter Futures.") >= 0);
+    t("ten module cards", document.querySelectorAll(".mcard").length === 10);
+    t("demo badge persistent in header", !!document.querySelector(".demo-pill .badge-demo"));
+
+    /* 2 — optimizer */
+    await go("#/corridor-optimizer");
+    t("optimizer renders", viewText().indexOf("Provider comparison") >= 0);
+    var rows = document.querySelectorAll("#cmpTable tbody tr");
+    t("5 providers + benchmark row", rows.length === 6, "rows=" + rows.length);
+    t("best value badge shown", document.querySelector("#cmpTable tr.best") !== null);
+    var inp = document.getElementById("amtInput");
+    inp.value = "320000";
+    inp.dispatchEvent(new Event("input", { bubbles:true }));
+    await tick(600);
+    t("amount accepted, hero shows GBP", viewText().indexOf("GBP") >= 0);
+    inp.value = "-50";
+    inp.dispatchEvent(new Event("input", { bubbles:true }));
+    await tick(600);
+    t("negative amount rejected with message", document.getElementById("amtErr").classList.contains("show"));
+    inp.value = "320000";
+    inp.dispatchEvent(new Event("input", { bubbles:true }));
+    await tick(600);
+    var cmp = FinancialEngine.compare(AppState.corridor(), 32000000);
+    results.push({ name:"demo scenario numbers", pass:true, detail:
+      "best=" + cmp.best.offerName + " recv=£" + (cmp.best.receiveMinor/100).toFixed(2) +
+      " fees=৳" + (cmp.best.totalFeeMinor/100).toFixed(2) +
+      " savings_vs_benchmark=£" + (cmp.savingsMinor/100).toFixed(2) });
+
+    /* 3 — draft cancel creates nothing */
+    await click("#draftBtn");
+    t("draft modal opens", Modal.isOpen());
+    await click('[data-close]');
+    t("draft modal cancelled", !Modal.isOpen());
+    t("cancel creates no draft", AppState.get("drafts").length === 0);
+
+    /* 4 — draft confirm */
+    await click("#draftBtn");
+    var confirmBtn = Array.prototype.slice.call(document.querySelectorAll(".modal-foot .btn"))
+      .filter(function(b){ return b.textContent.indexOf("Confirm simulated draft") >= 0; })[0];
+    if (!confirmBtn) throw new Error("confirm button missing");
+    confirmBtn.click(); await tick(120);
+    var drafts = AppState.get("drafts");
+    t("confirm creates one draft", drafts.length === 1);
+    var ref = drafts[0].ref;
+    t("ref format TX-DEMO-XXXXX", /^TX-DEMO-[A-Z2-9]{5}$/.test(ref), ref);
+    var expectRef = FinancialEngine.draftRef(FinancialEngine.canonicalDraft("dhaka-london", drafts[0].providerId, 32000000, 1));
+    t("ref deterministic from inputs", ref === expectRef, ref);
+
+    /* 5 — vault shows the draft */
+    await go("#/payment-vault");
+    t("vault shows new draft", viewText().indexOf(ref) >= 0);
+    var firstRow = document.querySelector("#vaultTable tbody tr");
+    firstRow.click(); await tick(120);
+    t("receipt modal opens", Modal.isOpen() && viewText === viewText); // modal root separate
+    t("receipt shows fee breakdown", document.getElementById("modalRoot").textContent.indexOf("Percentage fee") >= 0);
+    t("receipt stamped simulated", document.getElementById("modalRoot").textContent.indexOf("SIMULATED RECORD") >= 0);
+    await click('[data-close]');
+
+    /* 6 — scamshield */
+    await go("#/scamshield");
+    await click("#sampleScam"); await tick(150);
+    var a = AppState.get("lastAssessment");
+    t("sample scam score >= 85", a && a.score >= 85, "score=" + (a && a.score));
+    t("sample scam CRITICAL", a && a.severity === "critical");
+    t("verdict panel rendered", !!document.querySelector(".verdict.critical"));
+    await click("#sampleLegit"); await tick(150);
+    var b2 = AppState.get("lastAssessment");
+    t("sample legit score <= 10", b2 && b2.score <= 10, "score=" + (b2 && b2.score));
+    t("sample legit LOW", b2 && b2.severity === "low");
+    await click("#clearBtn"); await tick(80);
+    t("clear wipes assessment", AppState.get("lastAssessment") === null);
+
+    /* 7 — fx advisor: one seeded dataset everywhere */
+    await go("#/fx-advisor");
+    t("fx chart svg renders", !!document.querySelector(".fx-chart-card svg"));
+    var c = AppState.corridor();
+    var k1 = FxEngine.kpis(c), k2 = FxEngine.kpis(c);
+    t("fx series deterministic", JSON.stringify(k1.series) === JSON.stringify(k2.series));
+    var sig = FxEngine.signal(c);
+    t("fx signal valid", ["SEND_NOW","WAIT","HOLD"].indexOf(sig.signal) >= 0, sig.signal);
+    t("kpi uses same data as chart", document.querySelector(".fx-chart-card").textContent.indexOf(k1.current.toFixed(4)) >= 0);
+
+    /* 8 — tuition planner */
+    await go("#/tuition-planner");
+    var before = AppState.get("tuition").deadlines.length;
+    await click("#addDl"); await tick(120);
+    document.getElementById("fTitle").value = "QA Test Deadline";
+    document.getElementById("fInst").value = "QA University";
+    document.getElementById("fAmt").value = "1000";
+    document.getElementById("fCcy").value = "USD";
+    document.getElementById("fDue").value = "2027-06-01";
+    var saveBtn = Array.prototype.slice.call(document.querySelectorAll(".modal-foot .btn"))
+      .filter(function(x){ return x.textContent.indexOf("Add deadline") >= 0; })[0];
+    saveBtn.click(); await tick(150);
+    t("deadline added", AppState.get("tuition").deadlines.length === before + 1);
+    var delBtn = document.querySelector('[data-act="del"]');
+    delBtn.click(); await tick(150);
+    t("deadline removed", AppState.get("tuition").deadlines.length === before);
+    var ck = document.querySelector("[data-ck]");
+    var wasChecked = ck.checked;
+    ck.checked = !wasChecked;
+    ck.dispatchEvent(new Event("change", { bubbles:true })); await tick(100);
+    t("checklist toggles", AppState.get("tuition").checklist.filter(function(x){ return x.done; }).length === (wasChecked ? 0 : 1));
+    var bInp = document.getElementById("bPaid");
+    bInp.value = "400000";
+    bInp.dispatchEvent(new Event("input", { bubbles:true })); await tick(900);
+    t("budget updates remaining", AppState.get("tuition").budget.paidBDT === 400000);
+
+    /* 9 — copilot grounded + safe */
+    await go("#/ask-probaho");
+    document.getElementById("chatInput").value = "Which provider is cheapest right now?";
+    await click("#chatSend"); await tick(1000);
+    var msgs = document.querySelectorAll("#chatLog .msg.bot");
+    var lastBot = msgs[msgs.length - 1].textContent;
+    t("copilot answers grounded", lastBot.indexOf(cmp.best.offerName) >= 0, lastBot.slice(0, 80));
+    document.getElementById("chatInput").value = '<img src=x onerror="window.__xss=1">';
+    await click("#chatSend"); await tick(1000);
+    t("xss payload not executed", window.__xss === 0);
+    t("xss payload escaped in DOM", document.getElementById("chatLog").innerHTML.indexOf("<img") === -1);
+
+    /* 10 — persistence roundtrip + malformed guard */
+    t("storage roundtrip", (function(){ AppStorage.write({ z: 9 }); var r = AppStorage.read(); return r && r.z === 9; })());
+    try { localStorage.setItem(AppStorage.key, "{broken json"); } catch(e){}
+    t("malformed storage handled", AppStorage.read() === null);
+    AppStorage.clear(); AppState.persist();
+
+    /* 11 — router: all routes + 404 */
+    var paths = ["#/", "#/corridor-optimizer", "#/scamshield", "#/fx-advisor", "#/tuition-planner", "#/ask-probaho", "#/payment-vault"];
+    for (var i = 0; i < paths.length; i++){
+      await go(paths[i]);
+      t("route renders: " + paths[i], document.getElementById("view").children.length > 0);
+    }
+    await go("#/does-not-exist"); await tick(150);
+    t("unknown route shows 404", viewText().indexOf("404") >= 0);
+
+    /* 12 — reset demo */
+    AppState.resetDemo();
+    t("reset clears drafts", AppState.get("drafts").length === 0);
+    t("reset restores seed deadlines", AppState.get("tuition").deadlines.length === SeedTuition.deadlines.length);
+
+    /* 13 — responsive: hamburger visibility at current viewport */
+    var hb = getComputedStyle(document.getElementById("hamburger")).display;
+    results.push({ name:"hamburger display @ " + window.innerWidth + "px", pass:true, detail: hb });
+
+    /* 14 — admin guard while signed out */
+    AppState.set("admin", { content:{}, corridors:{}, providers:{}, riskWeights:{}, riskDisabled:{}, tuitionSeeds:null, settings:{} });
+    AppState.set("audit", []);
+    AuthService.signOut();
+    await go("#/admin"); await tick(200);
+    t("admin route signed out shows sign-in", viewText().indexOf("Sign in to the admin console") >= 0);
+    t("no admin content flashes before guard", !document.querySelector(".admin-shell"));
+    await go("#/admin/users"); await tick(200);
+    t("deep admin route also guarded", viewText().indexOf("Sign in to the admin console") >= 0);
+    t("public nav has no admin link", document.getElementById("mainNav").textContent.indexOf("Admin") === -1);
+    t("public nav has no sign-in link", document.getElementById("mainNav").textContent.toLowerCase().indexOf("sign in") === -1);
+
+    function modalBtn(label){
+      return Array.prototype.filter.call(document.querySelectorAll(".modal-foot .btn"),
+        function(b){ return b.textContent.trim() === label; })[0];
+    }
+    async function signInAs(email){
+      ModSignIn.setRedirect("#/admin");
+      await go("#/sign-in"); await tick(200);
+      document.getElementById("siEmail").value = email;
+      document.getElementById("siPass").value = "demo1234";
+      await click("#siSubmit"); await tick(750);
+    }
+
+    /* 15 — sign-in validation, then viewer session */
+    await go("#/sign-in"); await tick(200);
+    await click("#siSubmit"); await tick(250);
+    t("empty credentials rejected", document.getElementById("siErr").textContent.length > 0 && !AuthService.signedIn());
+    document.getElementById("siEmail").value = "owner@probaho.demo";
+    document.getElementById("siPass").value = "wrongpass";
+    await click("#siSubmit"); await tick(750);
+    t("wrong password rejected", document.getElementById("siErr").textContent.indexOf("do not match") >= 0 && !AuthService.signedIn());
+    await signInAs("viewer@probaho.demo");
+    t("viewer signs in, lands on admin", AuthService.signedIn() && AuthService.role() === "viewer" && location.hash.indexOf("#/admin") === 0);
+    t("dashboard renders for viewer", viewText().indexOf("Overview") >= 0 && !!document.querySelector(".admin-shell"));
+    t("viewer sidebar shows 4 permitted sections", document.querySelectorAll(".admin-side a").length === 4);
+    t("sign-in recorded in audit", AppState.get("audit").some(function(a){ return a.action === "sign-in"; }));
+    t("console shows DEMO MODE badge", viewText().indexOf("DEMO MODE") >= 0);
+
+    /* 15b — split-panel login + mobile tab bar */
+    AuthService.signOut();
+    await go("#/sign-in"); await tick(200);
+    t("staff sign-in uses split panel", !!document.querySelector(".auth-split"));
+    t("split brand panel has 3 feature bullets", document.querySelectorAll(".auth-split .brand-feats li").length === 3);
+    t("staff form ids intact in split layout", !!document.getElementById("siEmail") && !!document.getElementById("siPass") && !!document.getElementById("siSubmit"));
+    AuthService.signOut(); await go("#/"); await tick(200);
+    t("public entry uses split panel", !!document.querySelector(".auth-split"));
+    t("staff console link still on entry", !!document.querySelector('.auth-form a[href="#/sign-in"]'));
+    await click(".demo-acct"); await tick(600);
+    await go("#/dashboard"); await tick(200);
+    t("mobile tabs enabled on signed-in public pages", document.body.classList.contains("has-tabs"));
+    t("mobile tabs has 5 tabs", document.querySelectorAll("#mobileTabs a").length === 5);
+    t("no tab current on non-tab page", !document.querySelector('#mobileTabs a[aria-current="page"]'));
+    await go("#/home"); await tick(200);
+    t("active tab marked aria-current", (function(){ var a = document.querySelector('#mobileTabs a[href="#/home"]'); return !!a && a.getAttribute("aria-current") === "page"; })());
+    await go("#/send"); await tick(200);
+    t("aria-current follows navigation", (function(){ var a = document.querySelector('#mobileTabs a[href="#/send"]'); return !!a && a.getAttribute("aria-current") === "page"; })());
+    await go("#/admin"); await tick(200);
+    t("mobile tabs hidden on admin routes", !document.body.classList.contains("has-tabs"));
+    AuthService.signOut(); await go("#/"); await tick(200);
+    t("mobile tabs hidden when signed out", !document.body.classList.contains("has-tabs"));
+    await signInAs("viewer@probaho.demo");
+
+    /* 16 — viewer role denial + read-only vault */
+    await go("#/admin/vault"); await tick(200);
+    t("viewer can view vault", !!document.querySelector(".admin-shell"));
+    t("viewer sees read-only notice, no save", !document.querySelector('#view [data-act="reset-drafts"]') &&
+      document.querySelector(".perm-note") !== null);
+    await go("#/admin/users"); await tick(200);
+    t("viewer denied users section", viewText().indexOf("Access denied") >= 0);
+    await go("#/admin/settings"); await tick(200);
+    t("viewer denied settings", viewText().indexOf("Access denied") >= 0);
+
+    /* 17 — sign-out clears the in-memory session */
+    await go("#/admin"); await tick(200);
+    await click("#adminSignout"); await tick(250);
+    t("sign-out clears session", !AuthService.signedIn());
+    t("staff sign-out returns to staff sign-in", location.hash === "#/sign-in");
+    t("sign-out recorded in audit", AppState.get("audit").some(function(a){ return a.action === "sign-out"; }));
+    await go("#/admin"); await tick(200);
+    t("admin guarded again after sign-out", viewText().indexOf("Sign in to the admin console") >= 0);
+
+    /* 18 — owner: provider fee edit recalculates the public optimizer */
+    await signInAs("owner@probaho.demo");
+    t("owner signs in", AuthService.role() === "owner");
+    var cmpBefore = FinancialEngine.compare(AppState.corridor(), 32000000, AppState.enabledProviders());
+    await go("#/admin/providers"); await tick(200);
+    t("provider table renders 5 rows", document.querySelectorAll("#view table.data tbody tr").length === 5);
+    await click('[data-edit="meridian"]'); await tick(250);
+    t("provider edit modal opens", Modal.isOpen());
+    document.getElementById("pe-pct").value = "5";
+    modalBtn("Save provider").click(); await tick(250);
+    var effP = AdminConfig.effectiveProviders().filter(function(p){ return p.id === "meridian"; })[0];
+    t("provider override saved", effP.pctFee === 5);
+    var cmpAfter = FinancialEngine.compare(AppState.corridor(), 32000000, AppState.enabledProviders());
+    t("optimizer recalculates with edited fee", cmpAfter.bestId !== cmpBefore.bestId,
+      "best before=" + cmpBefore.bestId + " after=" + cmpAfter.bestId);
+    t("provider edit audited", AppState.get("audit").some(function(a){ return a.action === "provider.update"; }));
+    await click('[data-act="reset-defaults"]'); await tick(250);
+    modalBtn("Restore").click(); await tick(250);
+    var effP2 = AdminConfig.effectiveProviders().filter(function(p){ return p.id === "meridian"; })[0];
+    t("provider defaults restored", effP2.pctFee === 0.6);
+
+    /* 19 — rules: live preview, save, public effect, restore */
+    await go("#/admin/scamshield-rules"); await tick(200);
+    t("rule preview shows seeded scam 96", document.getElementById("rulePreview").textContent.indexOf("96 / 100") >= 0);
+    var wInp = document.querySelector('[data-w="R-URG"]');
+    wInp.value = "0";
+    wInp.dispatchEvent(new Event("input", { bubbles:true })); await tick(200);
+    t("preview recomputes live through engine", document.getElementById("rulePreview").textContent.indexOf("82 / 100") >= 0);
+    await click('[data-act="save"]'); await tick(250);
+    var a82 = RiskEngine.analyze(RiskEngine.SAMPLE_SCAM,
+      { weights: AdminConfig.getRiskWeights(), disabled: AdminConfig.getRiskDisabled() });
+    t("saved weights change engine output", a82.score === 82, "score=" + a82.score);
+    await go("#/scamshield"); await tick(200);
+    await click("#sampleScam"); await tick(250);
+    t("public scamshield reflects edited weights", AppState.get("lastAssessment").score === 82);
+    await go("#/admin/scamshield-rules"); await tick(200);
+    await click('[data-act="reset-defaults"]'); await tick(250);
+    modalBtn("Restore").click(); await tick(250);
+    t("rule defaults restored (scam 96)", RiskEngine.analyze(RiskEngine.SAMPLE_SCAM).score === 96);
+    t("audit log contains no secrets", !AppState.get("audit").some(function(a){
+      return JSON.stringify(a).indexOf("demo1234") >= 0;
+    }));
+
+    /* 20 — content XSS escaped, corridor toggle flows to public */
+    await go("#/admin/content"); await tick(200);
+    document.getElementById("ct-heroTitle").value = '<img src=x onerror="window.__xss=2">';
+    await click('[data-act="save"]'); await tick(250);
+    await go("#/"); await tick(200);
+    t("admin content xss not executed", window.__xss === 0);
+    t("admin content xss escaped on home", document.querySelector(".hero h1").textContent.indexOf("<img") >= 0);
+    await go("#/admin/content"); await tick(200);
+    await click('[data-act="reset-defaults"]'); await tick(250);
+    modalBtn("Restore defaults").click(); await tick(250);
+    t("content defaults restored", document.getElementById("ct-heroTitle").value.indexOf("Smarter Transfers.") === 0);
+    await go("#/admin/corridors"); await tick(200);
+    await click('[data-toggle="kl-dhaka"]'); await tick(250);
+    t("corridor disabled", AdminConfig.enabledCorridors().length === 3);
+    await go("#/corridor-optimizer"); await tick(200);
+    t("optimizer hides disabled corridor", document.querySelectorAll("#corrSeg button").length === 3);
+    await go("#/admin/corridors"); await tick(200);
+    await click('[data-toggle="kl-dhaka"]'); await tick(250);
+    t("corridor re-enabled", AdminConfig.enabledCorridors().length === 4);
+
+    /* 21 — users: self-protection + role/disable flows (simulated) */
+    await go("#/admin/users"); await tick(200);
+    t("users table renders 3 demo accounts", document.querySelectorAll("#view table.data tbody tr").length === 3);
+    function demoUser(email){
+      return AppState.get("admin").demoUsers.filter(function(u){ return u.email === email; })[0];
+    }
+    /* self role-change is refused and no modal opens */
+    await click('[data-role="owner@probaho.demo"]'); await tick(250);
+    t("self role-change refused", !Modal.isOpen() && demoUser("owner@probaho.demo").role === "owner");
+    /* self disable is refused */
+    await click('[data-toggle="owner@probaho.demo"]'); await tick(250);
+    t("self disable refused", demoUser("owner@probaho.demo").enabled === true);
+    /* promote editor -> owner (second owner), then demote back: allowed while another owner exists */
+    await click('[data-role="editor@probaho.demo"]'); await tick(250);
+    t("role modal opens for other account", Modal.isOpen());
+    document.querySelector('input[name="ur-role"][value="owner"]').checked = true;
+    modalBtn("Apply (simulated)").click(); await tick(250);
+    t("editor promoted to owner", demoUser("editor@probaho.demo").role === "owner" && !Modal.isOpen());
+    await click('[data-role="editor@probaho.demo"]'); await tick(250);
+    document.querySelector('input[name="ur-role"][value="editor"]').checked = true;
+    modalBtn("Apply (simulated)").click(); await tick(250);
+    t("demote allowed while another owner exists", demoUser("editor@probaho.demo").role === "editor" && !Modal.isOpen());
+    t("role change audited", AppState.get("audit").some(function(a){ return a.action === "user.role-change"; }));
+    await click('[data-toggle="viewer@probaho.demo"]'); await tick(250);
+    modalBtn("Disable").click(); await tick(250);
+    var viewerRec = AppState.get("admin").demoUsers.filter(function(u){
+      return u.email === "viewer@probaho.demo";
+    })[0];
+    t("viewer account disabled (simulated)", viewerRec.enabled === false);
+    await click("#adminSignout"); await tick(250);
+    ModSignIn.setRedirect("#/admin");
+    await go("#/sign-in"); await tick(200);
+    document.getElementById("siEmail").value = "viewer@probaho.demo";
+    document.getElementById("siPass").value = "demo1234";
+    await click("#siSubmit"); await tick(750);
+    t("disabled viewer cannot sign in", !AuthService.signedIn() &&
+      document.getElementById("siErr").textContent.indexOf("disabled") >= 0);
+    await signInAs("owner@probaho.demo");
+    await go("#/admin/users"); await tick(200);
+    await click('[data-toggle="viewer@probaho.demo"]'); await tick(250);
+    modalBtn("Enable").click(); await tick(250);
+    var viewerRec2 = AppState.get("admin").demoUsers.filter(function(u){
+      return u.email === "viewer@probaho.demo";
+    })[0];
+    t("viewer account re-enabled", viewerRec2.enabled === true);
+
+    /* 22 — audit log viewer + final sign-out */
+    await go("#/admin/audit"); await tick(200);
+    t("audit log lists events", document.querySelectorAll("#auTable tbody tr").length > 5);
+    t("audit marks demo mode", document.querySelector("#auTable").textContent.indexOf("DEMO") >= 0);
+    await click("#adminSignout"); await tick(250);
+    t("final sign-out clears session", !AuthService.signedIn());
+
+    /* 23 — new pages from the Nexus draft: dashboard, send, rates, help,
+       admin kyc / payout-routes / reports, vault CSV export */
+    await signInPublic();
+    t("public session for new-page tests", AuthService.signedIn());
+    await go("#/dashboard"); await tick(200);
+    t("dashboard renders", viewText().indexOf("Dashboard") >= 0);
+    t("dashboard has 4 KPIs", document.querySelectorAll(".kpi-row .kpi").length === 4);
+    t("dashboard quick actions link to send", !!document.querySelector('.mcard[href="#/send"]'));
+
+    await go("#/rates"); await tick(200);
+    t("rate board renders", viewText().indexOf("Rate board") >= 0);
+    t("rate board lists all enabled corridors",
+      document.querySelectorAll(".data tbody tr").length === AppState.enabledCorridors().length);
+    t("rate board is honest about synthetic data",
+      viewText().indexOf("SYNTHETIC RATES") >= 0 && viewText().toLowerCase().indexOf("not live quotes") >= 0);
+
+    await go("#/help"); await tick(200);
+    t("help renders FAQ", document.querySelectorAll(".faq").length === 8);
+    document.querySelector("#tSubject").value = "QA ticket";
+    document.querySelector("#tMsg").value = "Harness check — please ignore.";
+    await click("#tSend"); await tick(250);
+    t("help ticket saved", AppState.get("tickets").some(function(x){ return x.subject === "QA ticket"; }));
+    t("help ticket confirmation shown", viewText().indexOf("T-") >= 0);
+
+    /* send wizard: details → review → draft */
+    var draftsBefore = AppState.get("drafts").length;
+    await go("#/send"); await tick(250);
+    t("send wizard step 1 renders", viewText().indexOf("Transfer details") >= 0);
+    var amt = document.querySelector("#sAmt");
+    amt.value = "1000";
+    amt.dispatchEvent(new Event("input", { bubbles: true }));
+    await tick(500);
+    t("send wizard shows live quote", document.querySelector("#sQuote").textContent.indexOf("Recipient receives") >= 0);
+    await click("#sNext"); await tick(250);
+    t("send wizard step 2 review renders", viewText().indexOf("Review your transfer") >= 0);
+    t("send review shows payout method", viewText().indexOf("Payout method") >= 0);
+    await click("#sConfirm"); await tick(300);
+    t("send wizard creates a draft", AppState.get("drafts").length === draftsBefore + 1);
+    t("send wizard done page shows ref", viewText().indexOf("TX-DEMO-") >= 0);
+
+    /* sign in as owner for the new admin sections (signInAs waits out the 450ms demo latency) */
+    await signInAs("owner@probaho.demo");
+    t("owner re-signed in for new admin tests", AuthService.signedIn() && AuthService.role() === "owner");
+
+    await go("#/admin/kyc"); await tick(200);
+    t("kyc queue renders", viewText().indexOf("KYC Queue") >= 0);
+    t("kyc shows synthetic banner", viewText().indexOf("SIMULATED identity reviews") >= 0);
+    t("kyc has 4 pending", AdminConfig.effectiveKyc().filter(function(a){ return a.status === "pending"; }).length === 4);
+    await click('[data-approve="kyc-241"]'); await tick(250);
+    t("kyc approve works",
+      AdminConfig.effectiveKyc().filter(function(a){ return a.id === "kyc-241"; })[0].status === "approved");
+    t("kyc approve audit-logged",
+      AppState.get("audit").some(function(e){ return e.action === "kyc.approve"; }));
+
+    await go("#/admin/payout-routes"); await tick(200);
+    t("payout routes render", viewText().indexOf("Payout Routes") >= 0);
+    var routesBefore = AdminConfig.enabledPayoutRoutes("dhaka-london").length;
+    await click('[data-toggle="po-bank-uk"]'); await tick(250);
+    t("payout route disable works",
+      AdminConfig.enabledPayoutRoutes("dhaka-london").length === routesBefore - 1);
+    t("payout toggle audit-logged",
+      AppState.get("audit").some(function(e){ return e.action === "payout-route.toggle"; }));
+    await click('[data-toggle="po-bank-uk"]'); await tick(250);
+    t("payout route re-enable works",
+      AdminConfig.enabledPayoutRoutes("dhaka-london").length === routesBefore);
+
+    await go("#/admin/reports"); await tick(200);
+    t("reports render", viewText().indexOf("Reports") >= 0);
+    t("reports scans tab shows session scan",
+      document.querySelector("#repBody").textContent.indexOf("96 / 100") >= 0);
+    t("reports never stores message text",
+      document.querySelector("#repBody").textContent.indexOf("urgent") < 0);
+    await click('[data-tab="tickets"]'); await tick(250);
+    t("reports tickets tab shows help ticket",
+      document.querySelector("#repBody").textContent.indexOf("QA ticket") >= 0);
+    var ticketId = AppState.get("tickets")[0].id;
+    await click('[data-ticket="' + ticketId + '"]'); await tick(250);
+    t("ticket resolve works",
+      AppState.get("tickets").filter(function(x){ return x.id === ticketId; })[0].status === "resolved");
+
+    await go("#/admin/vault"); await tick(200);
+    t("vault has CSV export", !!document.querySelector('[data-act="export-csv"]'));
+    await click('[data-act="export-csv"]'); await tick(300);
+    t("vault CSV export audit-logged",
+      AppState.get("audit").some(function(e){ return e.action === "vault.export-csv"; }));
+
+    await click("#adminSignout"); await tick(250);
+    t("sign-out after new admin tests", !AuthService.signedIn());
+
+    /* 24 — staff console hardening: lockout, audit, separate sessions */
+    await go("#/sign-in"); await tick(200);
+    t("staff sign-in lists console protections",
+      viewText().indexOf("Console protections active") >= 0);
+    async function badAttempt(pw){
+      document.getElementById("siEmail").value = "owner@probaho.demo";
+      document.getElementById("siPass").value = pw;
+      await click("#siSubmit"); await tick(700);
+    }
+    function visible(id){
+      var e = document.getElementById(id);
+      return !!e && e.textContent.trim().length > 0 && getComputedStyle(e).display !== "none";
+    }
+    await badAttempt("wrong0");
+    t("wrong password shows a VISIBLE error",
+      visible("siErr") && document.getElementById("siErr").textContent.indexOf("do not match") >= 0);
+    for (var fi = 1; fi < 5; fi++){ await badAttempt("wrong" + fi); }
+    t("5 failed attempts trigger lockout",
+      viewText().indexOf("locked for 15 minutes") >= 0);
+    t("lockout message is VISIBLE (not just in textContent)", visible("siLock"));
+    t("failed attempts audit-logged, passwords never stored",
+      AppState.get("audit").filter(function(e){ return e.action === "sign-in-failed"; }).length >= 5 &&
+      AppState.get("audit").filter(function(e){ return e.action === "sign-in-failed"; })
+        .every(function(e){ return JSON.stringify(e).indexOf("wrong") === -1; }));
+    document.getElementById("siEmail").value = "owner@probaho.demo";
+    document.getElementById("siPass").value = "demo1234";
+    await click("#siSubmit"); await tick(700);
+    t("correct password rejected while locked", !AuthService.signedIn());
+    await click("#lockReset"); await tick(300);
+    t("lockout escape hatch clears the lock",
+      AuthService.attemptsLeft() === 5 && !document.getElementById("siSubmit").disabled);
+    await go("#/"); await tick(150); /* leave + return so the form re-renders unlocked */
+    await go("#/sign-in"); await tick(200);
+    await click('.demo-acct[data-email="owner@probaho.demo"]'); await tick(800);
+    t("tap-to-sign-in works after lockout cleared", AuthService.isStaff());
+    t("staff session reaches public dashboard",
+      await (async function(){ await go("#/dashboard"); await tick(200);
+        return viewText().indexOf("Dashboard") >= 0; })());
+    await click("#headerSignout"); await tick(250);
+    t("header sign-out clears staff session", !AuthService.signedIn() && location.hash === "#/sign-in");
+    await signInPublic();
+    await go("#/sign-in"); await tick(200);
+    t("public session still sees staff sign-in form (separate sessions)",
+      viewText().indexOf("Sign in to the admin console") >= 0 && !AuthService.isStaff());
+    await click("#headerSignout"); await tick(250);
+    t("header sign-out clears public session", !AuthService.signedIn() && location.hash === "#/");
+    /* REGRESSION: opening #/admin directly renders the staff form IN PLACE
+       (hash stays #/admin). Signing in must reach the console — assigning
+       location.hash its current value fires no hashchange event. */
+    await go("#/admin"); await tick(300);
+    t("direct #/admin renders staff sign-in in place",
+      location.hash === "#/admin" && viewText().indexOf("Sign in to the admin console") >= 0);
+    await click('.demo-acct[data-email="owner@probaho.demo"]'); await tick(900);
+    t("sign-in from in-place guard form reaches admin console (not stuck)",
+      AuthService.isStaff() && viewText().indexOf("Admin console") >= 0 &&
+      document.getElementById("siSubmit") === null);
+
+  } catch (err){
+    results.push({ name:"HARNESS EXCEPTION", pass:false, detail: String(err && err.stack || err) });
+  }
+  var fails = results.filter(function(r){ return !r.pass; }).length;
+  var payload =
+    "QA RESULT: " + (results.length - fails) + "/" + results.length + " passed\n" +
+    "CONSOLE ERRORS: " + consoleErrors.length + "\n" +
+    consoleErrors.join("\n") + "\n" +
+    JSON.stringify(results, null, 1);
+  document.getElementById("qa-results").textContent = payload;
+  document.title = "QA DONE " + (results.length - fails) + "/" + results.length;
+  try {
+    if (location.protocol.indexOf("http") === 0)
+      await fetch("http://127.0.0.1:8901/__qa", { method:"POST", body: payload });
+  } catch (e) { /* server not running — DOM still holds results */ }
+}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
+else run();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "Probaho Remit \u2014 Titan Edition",
+  "short_name": "Probaho",
+  "description": "Global Cross-Border Remittance, Multi-Currency Crypto Vault, Custom Tuition Planner & AI Financial Copilot.",
+  "start_url": "./index.html#/",
+  "display": "standalone",
+  "background_color": "#0b1324",
+  "theme_color": "#2563eb",
+  "orientation": "any",
+  "categories": [
+    "finance",
+    "education",
+    "utilities"
+  ]
+}
