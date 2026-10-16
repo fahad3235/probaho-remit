@@ -33,7 +33,7 @@ var DESIGN_SAMPLES = [
       "Multi-layered ambient card elevation with 18px editorial corner radii and tabular numeric alignment."
     ],
     frontendStack: "CSS Custom Properties (--bg: #FAF7F2, --primary: #1E3A8A, --teal: #B45309) + Responsive Bento Grid + SVG Radial Gauges",
-    backendStack: "Supabase PostgreSQL Multi-Currency ACID Ledger + Fedwire/SWIFT ISO-20022 Reconciliation + OpenRouter Nemotron 3 Ultra (550B) Copilot+"
+    backendStack: "PostgreSQL Multi-Currency ACID Ledger + Fedwire/SWIFT ISO-20022 Reconciliation + OpenRouter Nemotron 3 Ultra (550B) Copilot+"
   },
   {
     id: "obsidian-quantum",
@@ -230,13 +230,13 @@ function render(){
   } else if (activeArchTab === "database"){
     archContentHtml =
       '<div style="background:#0f172a;color:#f8fafc;border-radius:14px;padding:16px;">' +
-        '<div style="font-size:11px;font-weight:800;color:#fbbf24;text-transform:uppercase;margin-bottom:6px;">Production Supabase PostgreSQL Multi-Currency &amp; Crypto Vault Schema (supabase/schema.sql)</div>' +
+        '<div style="font-size:11px;font-weight:800;color:#fbbf24;text-transform:uppercase;margin-bottom:6px;">Production PostgreSQL Multi-Currency &amp; Crypto Vault Schema</div>' +
         '<pre class="mono" style="margin:0;font-size:11.5px;line-height:1.5;color:#e2e8f0;white-space:pre-wrap;">CREATE TABLE public.wallet_balances (\n  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),\n  wallet_id UUID NOT NULL REFERENCES public.wallets(id) ON DELETE CASCADE,\n  currency VARCHAR(10) NOT NULL, -- USD, BDT, CNY, USDT, BTC, ETH\n  balance NUMERIC(28, 8) DEFAULT 0 CHECK (balance >= 0),\n  locked_in_vault NUMERIC(28, 8) DEFAULT 0 CHECK (locked_in_vault >= 0),\n  available_balance NUMERIC(28, 8) GENERATED ALWAYS AS (balance - locked_in_vault) STORED,\n  UNIQUE(wallet_id, currency)\n);</pre>' +
       '</div>';
   } else {
     archContentHtml =
       '<div style="background:#0f172a;color:#f8fafc;border-radius:14px;padding:16px;">' +
-        '<div style="font-size:11px;font-weight:800;color:#c084fc;text-transform:uppercase;margin-bottom:6px;">OpenRouter NVIDIA Nemotron 3 Ultra (550B) Copilot+ &amp; Settlement APIs (netlify/functions/*)</div>' +
+        '<div style="font-size:11px;font-weight:800;color:#c084fc;text-transform:uppercase;margin-bottom:6px;">OpenRouter NVIDIA Nemotron 3 Ultra (550B) Copilot+ &amp; Settlement APIs (demo endpoints)</div>' +
         '<pre class="mono" style="margin:0;font-size:11.5px;line-height:1.5;color:#e2e8f0;white-space:pre-wrap;">POST https://openrouter.ai/api/v1/chat/completions\nHeaders: Authorization: Bearer $OPENROUTER_API_KEY\nBody: {\n  "model": "nvidia/nemotron-3-ultra-550b-a55b",\n  "messages": [ { "role": "system", "content": buildLiveWebsiteSnapshot() }, ... ]\n}\n// Plus <agent_action> real-time execution for Vault Deposits, Swaps, Staking & Tuition</pre>' +
       '</div>';
   }

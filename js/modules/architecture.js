@@ -43,7 +43,7 @@ function render(){
               '</div>' +
               '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(251,191,36,0.3);border-radius:12px;padding:12px;">' +
                 '<b style="color:#fbbf24;font-size:12.5px;display:block;">External Services</b>' +
-                '<span style="font-size:11.5px;color:#cbd5e1;">Supabase Auth & RLS · Email · File Storage</span>' +
+                '<span style="font-size:11.5px;color:#cbd5e1;">Managed Auth & RLS · Email · File Storage</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
@@ -91,7 +91,7 @@ function render(){
             '</div>' +
             '<div>' +
               '<b style="color:#34d399;display:block;margin-bottom:4px;">Backend:</b>' +
-              '<span style="color:#cbd5e1;line-height:1.5;display:block;">• Node.js & Express<br>• PostgreSQL<br>• Supabase Auth<br>• Rate Limiting</span>' +
+              '<span style="color:#cbd5e1;line-height:1.5;display:block;">• Node.js & Express<br>• PostgreSQL<br>• Managed Auth<br>• Rate Limiting</span>' +
             '</div>' +
           '</div>' +
 

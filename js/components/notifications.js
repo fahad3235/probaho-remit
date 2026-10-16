@@ -1,7 +1,7 @@
 /**
  * notifications.js — Universal NotificationHub & ModNotifications
  * Complete notification center, upcoming payment reminders, live alerts, and badge synchronization.
- * Works seamlessly on Netlify static hosting, browser local storage, and live server environments.
+ * Works seamlessly on static hosting, browser local storage, and live environments.
  */
 (function(global){
 "use strict";
