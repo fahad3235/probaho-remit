@@ -1,0 +1,40 @@
+/* ============================================================
+   auth.css — staff sign-in page (Mode B demo sign-in).
+   ============================================================ */
+
+.auth-wrap{
+  max-width:520px;margin:34px auto 60px;padding:0 18px;
+}
+.auth-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-xl);
+  box-shadow:var(--sh-2);padding:30px 30px 24px;
+}
+.auth-brand{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.auth-brand .brand-mark{width:40px;height:40px}
+.auth-brand b{display:block;font-size:1.02rem;letter-spacing:-.01em}
+.auth-brand small{color:var(--ink-2);font-size:.78rem}
+.auth-card h1{font-size:1.35rem;letter-spacing:-.02em;margin:0 0 6px}
+.mode-note{
+  background:var(--warn-tint);border:1px solid #EBD9AE;border-radius:var(--r);
+  padding:12px 14px;font-size:.84rem;color:#6B4E12;margin:16px 0;
+}
+.mode-note b{display:block;margin-bottom:4px}
+.demo-accts{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px}
+.demo-acct-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.demo-acct{
+  border:1px solid var(--line);border-radius:var(--r);background:var(--surface-2);
+  padding:10px;cursor:pointer;text-align:left;font:inherit;transition:border-color var(--t-fast);
+}
+.demo-acct:hover{border-color:var(--teal-deep)}
+.demo-acct b{display:block;font-size:.82rem}
+.demo-acct .mono{font-size:.72rem;color:var(--ink-2);word-break:break-all}
+.role-pill{
+  display:inline-block;margin-top:6px;font-size:.68rem;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;background:var(--navy-800);color:#fff;border-radius:999px;padding:2px 8px;
+}
+.auth-foot{margin-top:18px;text-align:center;font-size:.88rem}
+.btn-block{width:100%;justify-content:center;margin-top:6px}
+@media (max-width:480px){
+  .auth-card{padding:22px 18px}
+  .demo-acct-grid{grid-template-columns:1fr}
+}
