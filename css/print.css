@@ -1,0 +1,11 @@
+/* Print: receipts only. Everything else hidden. */
+@media print{
+  body{background:#fff}
+  .site-header,.site-footer,.drawer,.drawer-bg,.toasts,.modal-foot,.no-print,
+  .chat-in,.chips,.toolbar,.page-head .actions{display:none !important}
+  .page{max-width:none;padding:0;margin:0;animation:none}
+  .modal-bg{position:static;background:none;backdrop-filter:none;padding:0;animation:none}
+  .modal{box-shadow:none;max-height:none;width:100%;animation:none;border:1px solid #ccc}
+  .receipt{border:2px dashed #999;box-shadow:none}
+  a{color:#000;text-decoration:none}
+}

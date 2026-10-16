@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables & secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Temporary extraction & scratch directories
+extracted_fixed_13/
+extracted_temp/
+scratch/
+.system_generated/
+.tempmediaStorage/
+.user_uploaded/
+inspect-zip.js
+check-missing.js
+test-*.js
+test-*.ps1
+package-netlify-posix.ps1
+probaho-remit-titan-edition (1).zip
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+.vscode/
+.idea/
+
+# Large test media
+*.jpeg
+*.jpg
+*.png
+*.pdf
+
+# Allow project documentation images if any
+!docs/**

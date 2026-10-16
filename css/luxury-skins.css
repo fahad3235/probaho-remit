@@ -1,0 +1,240 @@
+/* ============================================================
+   luxury-skins.css — 4 Global Luxury UI/UX Design Systems
+   1. geneva-gold:        Geneva Private Wealth (Swiss Ivory & Sapphire Gold)
+   2. obsidian-quantum:   Obsidian Quantum Web3 (Deep Space Glass & Neon Cyan)
+   3. emerald-sovereign:  Singapore Emerald Executive (Jade & Frosted Pearl)
+   4. tokyo-bento:        Tokyo Neo-Bento Super-App (Airy Snow & Electric Violet-Rose)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   DESIGN 1: GENEVA PRIVATE WEALTH (Swiss Ivory & Imperial Gold)
+   ------------------------------------------------------------ */
+body[data-ui-skin="geneva-gold"] {
+  --bg: #FAF7F2 !important;
+  --surface: #FFFFFF !important;
+  --surface-2: #F4EFE6 !important;
+  --ink: #0F172A !important;
+  --ink-2: #475569 !important;
+  --ink-3: #64748B !important;
+  --line: #E6DEC8 !important;
+  --line-2: #D5C7A3 !important;
+  --teal: #B45309 !important;
+  --teal-deep: #1E3A8A !important;
+  --teal-ink: #1E3A8A !important;
+  --teal-tint: #FEF3C7 !important;
+  --primary: #1E3A8A !important;
+  --primary-hover: #172554 !important;
+  background: radial-gradient(120% 100% at 50% 0%, #FDFBF7 0%, #F5EFE4 100%) !important;
+  color: #0F172A !important;
+}
+body[data-ui-skin="geneva-gold"] .site-header {
+  background: rgba(250, 247, 242, 0.94) !important;
+  border-bottom: 1px solid #DECFA8 !important;
+  box-shadow: 0 4px 20px rgba(180, 83, 9, 0.06) !important;
+}
+body[data-ui-skin="geneva-gold"] .brand-mark {
+  background: linear-gradient(135deg, #1E3A8A, #B45309) !important;
+  box-shadow: 0 6px 16px rgba(180, 83, 9, 0.35) !important;
+}
+body[data-ui-skin="geneva-gold"] .card,
+body[data-ui-skin="geneva-gold"] .kpi,
+body[data-ui-skin="geneva-gold"] .metric-card-box,
+body[data-ui-skin="geneva-gold"] .mcard {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%) !important;
+  border: 1px solid #E5D9B6 !important;
+  border-radius: 18px !important;
+  box-shadow: 0 12px 32px -12px rgba(30, 58, 138, 0.08), 0 2px 6px rgba(180, 83, 9, 0.05) !important;
+}
+body[data-ui-skin="geneva-gold"] .btn-primary {
+  background: linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 60%, #B45309 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 20px -4px rgba(30, 58, 138, 0.35) !important;
+}
+body[data-ui-skin="geneva-gold"] .hero-cosmic,
+body[data-ui-skin="geneva-gold"] .hero {
+  background: radial-gradient(120% 100% at 85% 0%, #3B2810 0%, #172554 55%, #091024 100%) !important;
+  border: 1px solid rgba(251, 191, 36, 0.35) !important;
+}
+
+/* ------------------------------------------------------------
+   DESIGN 2: OBSIDIAN QUANTUM WEB3 (Deep Space Glass & Neon Cyan)
+   ------------------------------------------------------------ */
+body[data-ui-skin="obsidian-quantum"] {
+  --bg: #050814 !important;
+  --surface: #0B1226 !important;
+  --surface-2: #111C38 !important;
+  --ink: #F8FAFC !important;
+  --ink-2: #94A3B8 !important;
+  --ink-3: #64748B !important;
+  --line: rgba(56, 189, 248, 0.18) !important;
+  --line-2: rgba(99, 102, 241, 0.32) !important;
+  --teal: #06B6D4 !important;
+  --teal-deep: #6366F1 !important;
+  --teal-ink: #38BDF8 !important;
+  --teal-tint: rgba(6, 182, 212, 0.16) !important;
+  --primary: #06B6D4 !important;
+  --primary-hover: #0891B2 !important;
+  background: radial-gradient(circle at 18% 12%, #0F1E42 0%, #060916 55%, #03050C 100%) !important;
+  color: #F8FAFC !important;
+}
+body[data-ui-skin="obsidian-quantum"] .site-header {
+  background: rgba(6, 10, 25, 0.88) !important;
+  backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.22) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .brand,
+body[data-ui-skin="obsidian-quantum"] .page-title,
+body[data-ui-skin="obsidian-quantum"] h1,
+body[data-ui-skin="obsidian-quantum"] h2,
+body[data-ui-skin="obsidian-quantum"] h3,
+body[data-ui-skin="obsidian-quantum"] b {
+  color: #F8FAFC !important;
+}
+body[data-ui-skin="obsidian-quantum"] .main-nav a {
+  color: #CBD5E1 !important;
+}
+body[data-ui-skin="obsidian-quantum"] .main-nav a[aria-current="page"] {
+  background: rgba(6, 182, 212, 0.18) !important;
+  color: #38BDF8 !important;
+  box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.4) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .card,
+body[data-ui-skin="obsidian-quantum"] .kpi,
+body[data-ui-skin="obsidian-quantum"] .metric-card-box,
+body[data-ui-skin="obsidian-quantum"] .mcard,
+body[data-ui-skin="obsidian-quantum"] .chat,
+body[data-ui-skin="obsidian-quantum"] .table-wrap,
+body[data-ui-skin="obsidian-quantum"] div[style*="background:#fff"],
+body[data-ui-skin="obsidian-quantum"] div[style*="background: #fff"],
+body[data-ui-skin="obsidian-quantum"] div[style*="background:#f8fafc"] {
+  background: rgba(11, 18, 38, 0.88) !important;
+  border-color: rgba(56, 189, 248, 0.22) !important;
+  color: #F1F5F9 !important;
+  box-shadow: 0 14px 36px -10px rgba(0, 0, 0, 0.65), 0 0 24px rgba(6, 182, 212, 0.08) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .input,
+body[data-ui-skin="obsidian-quantum"] select,
+body[data-ui-skin="obsidian-quantum"] textarea {
+  background: #070C1B !important;
+  color: #F8FAFC !important;
+  border-color: rgba(99, 102, 241, 0.35) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .btn-primary {
+  background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #6366F1 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .btn-secondary {
+  background: rgba(30, 41, 59, 0.85) !important;
+  color: #E2E8F0 !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .site-footer {
+  background: #040711 !important;
+  border-top-color: rgba(56, 189, 248, 0.18) !important;
+}
+body[data-ui-skin="obsidian-quantum"] .footer-disc {
+  background: #0B1226 !important;
+  color: #94A3B8 !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+}
+
+/* ------------------------------------------------------------
+   DESIGN 3: SINGAPORE EMERALD EXECUTIVE (Jade & Frosted Pearl)
+   ------------------------------------------------------------ */
+body[data-ui-skin="emerald-sovereign"] {
+  --bg: #F2FAF6 !important;
+  --surface: #FFFFFF !important;
+  --surface-2: #E6F5EE !important;
+  --ink: #06281E !important;
+  --ink-2: #1E4D3B !important;
+  --ink-3: #3D6B59 !important;
+  --line: #C6E6D6 !important;
+  --line-2: #9ED4BA !important;
+  --teal: #10B981 !important;
+  --teal-deep: #047857 !important;
+  --teal-ink: #065F46 !important;
+  --teal-tint: #D1FAE5 !important;
+  --primary: #047857 !important;
+  --primary-hover: #065F46 !important;
+  background: linear-gradient(180deg, #F0FDF4 0%, #ECFDF5 50%, #F8FAFC 100%) !important;
+  color: #06281E !important;
+}
+body[data-ui-skin="emerald-sovereign"] .site-header {
+  background: rgba(242, 250, 246, 0.94) !important;
+  border-bottom: 1px solid #BCE3D0 !important;
+}
+body[data-ui-skin="emerald-sovereign"] .brand-mark {
+  background: linear-gradient(135deg, #047857, #10B981) !important;
+  box-shadow: 0 6px 16px rgba(4, 120, 87, 0.35) !important;
+}
+body[data-ui-skin="emerald-sovereign"] .card,
+body[data-ui-skin="emerald-sovereign"] .kpi,
+body[data-ui-skin="emerald-sovereign"] .metric-card-box,
+body[data-ui-skin="emerald-sovereign"] .mcard {
+  background: #FFFFFF !important;
+  border: 1px solid #C6E6D6 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 12px 28px -10px rgba(4, 120, 87, 0.10) !important;
+}
+body[data-ui-skin="emerald-sovereign"] .btn-primary {
+  background: linear-gradient(135deg, #065F46 0%, #047857 55%, #10B981 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 8px 20px -4px rgba(4, 120, 87, 0.35) !important;
+}
+body[data-ui-skin="emerald-sovereign"] .hero-cosmic,
+body[data-ui-skin="emerald-sovereign"] .hero {
+  background: radial-gradient(120% 100% at 85% 0%, #065F46 0%, #064E3B 55%, #022C22 100%) !important;
+}
+
+/* ------------------------------------------------------------
+   DESIGN 4: TOKYO NEO-BENTO SUPER-APP (Snow & Rose-Violet Bento)
+   ------------------------------------------------------------ */
+body[data-ui-skin="tokyo-bento"] {
+  --bg: #FDFBFF !important;
+  --surface: #FFFFFF !important;
+  --surface-2: #F6F0FF !important;
+  --ink: #181028 !important;
+  --ink-2: #4A3E63 !important;
+  --ink-3: #7A6B99 !important;
+  --line: #E9D8FD !important;
+  --line-2: #D6BCFA !important;
+  --teal: #E11D48 !important;
+  --teal-deep: #7C3AED !important;
+  --teal-ink: #6D28D9 !important;
+  --teal-tint: #F3E8FF !important;
+  --primary: #7C3AED !important;
+  --primary-hover: #6D28D9 !important;
+  background: radial-gradient(120% 100% at 15% 0%, #FFF5F7 0%, #FAF5FF 55%, #F8FAFC 100%) !important;
+  color: #181028 !important;
+}
+body[data-ui-skin="tokyo-bento"] .site-header {
+  background: rgba(253, 251, 255, 0.92) !important;
+  border-bottom: 1px solid #E9D8FD !important;
+}
+body[data-ui-skin="tokyo-bento"] .brand-mark {
+  background: linear-gradient(135deg, #E11D48, #7C3AED) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 18px rgba(124, 58, 237, 0.35) !important;
+}
+body[data-ui-skin="tokyo-bento"] .card,
+body[data-ui-skin="tokyo-bento"] .kpi,
+body[data-ui-skin="tokyo-bento"] .metric-card-box,
+body[data-ui-skin="tokyo-bento"] .mcard {
+  background: #FFFFFF !important;
+  border: 1.5px solid #EFE3FF !important;
+  border-radius: 26px !important;
+  box-shadow: 0 16px 40px -14px rgba(124, 58, 237, 0.12), 0 4px 12px rgba(225, 29, 72, 0.05) !important;
+}
+body[data-ui-skin="tokyo-bento"] .btn-primary {
+  background: linear-gradient(135deg, #E11D48 0%, #9333EA 55%, #7C3AED 100%) !important;
+  color: #FFFFFF !important;
+  border-radius: 999px !important;
+  box-shadow: 0 10px 24px -6px rgba(147, 51, 234, 0.42) !important;
+}
+body[data-ui-skin="tokyo-bento"] .hero-cosmic,
+body[data-ui-skin="tokyo-bento"] .hero {
+  background: radial-gradient(120% 100% at 85% 0%, #831843 0%, #3B0764 55%, #1E1B4B 100%) !important;
+  border-radius: 30px !important;
+}

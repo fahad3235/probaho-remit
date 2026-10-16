@@ -1,0 +1,79 @@
+/* ============================================================
+   Probaho Remit — Nexus Titan Edition · Global Design Tokens
+   Single source of truth for colour, typography, spacing, elevation.
+   ============================================================ */
+:root{
+  /* Core Brand Palette (Section 4) */
+  --navy-950:#071B33;   /* deep navy */
+  --navy-900:#0B1F38;   /* sidebar navy */
+  --navy-850:#0E2645;
+  --navy-800:#122E52;   /* elevated navy */
+  --navy-700:#173963;   /* card surface on dark */
+  --navy-600:#1E4678;
+
+  --bg:#F5F8FC;         /* main workspace */
+  --surface:#FFFFFF;    /* white surface */
+  --surface-2:#EEF3F9;
+  --surface-3:#E5ECF5;
+
+  --teal:#12B8B0;       /* primary teal */
+  --teal-deep:#0D9F9A;  /* teal hover */
+  --teal-ink:#097A76;
+  --teal-tint:#E6F8F7;
+
+  --primary:#12B8B0;
+  --primary-hover:#0D9F9A;
+
+  --ink:#172B4D;        /* primary text */
+  --ink-2:#64748B;      /* secondary text */
+  --ink-3:#8CA0B8;
+
+  --line:#E3EAF2;       /* borders */
+  --line-2:#CBD6E4;
+
+  --ok:#15803D;         /* success */
+  --ok-tint:#DCFCE7;
+  --warn:#B7791F;       /* warning */
+  --warn-tint:#FEF3C7;
+  --crit:#DC2626;       /* error */
+  --crit-tint:#FEE2E2;
+  --high:#EA580C;
+  --high-tint:#FFEDD5;
+  --info:#2563EB;       /* information */
+  --info-tint:#DBEAFE;
+
+  --demo:#0D9F9A;       /* demo-data badge */
+  --demo-tint:#E6F8F7;
+
+  /* AI Copilot Protected Subsystem Green Palette (Section 5) */
+  --copilot-green:#16A34A;
+  --copilot-green-deep:#15803D;
+  --copilot-green-bg:#F0FDF4;
+  --copilot-green-border:#BBF7D0;
+  --copilot-green-ink:#14532D;
+
+  /* Typography */
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+
+  /* Shape */
+  --r-sm:8px;
+  --r:12px;
+  --r-lg:16px;
+  --r-xl:20px;
+
+  /* Restrained Fintech Elevation */
+  --sh-1:0 1px 3px rgba(7,27,51,.05),0 6px 16px -10px rgba(7,27,51,.12);
+  --sh-2:0 2px 6px rgba(7,27,51,.06),0 18px 36px -18px rgba(7,27,51,.18);
+  --sh-pop:0 12px 36px -10px rgba(7,27,51,.25);
+
+  /* Motion */
+  --t-fast:.15s ease;
+  --t-med:.22s cubic-bezier(.22,.7,.25,1);
+
+  /* Layout */
+  --maxw:1320px;
+  --header-h:64px;
+  --sidebar-w:244px;
+}

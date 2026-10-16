@@ -1,0 +1,217 @@
+/* ============================================================
+   theme-porcelain.css — "Porcelain" editorial theme (selected design C).
+
+   Loaded last: redefines the token palette to warm paper + ink with
+   deep-green / terracotta / gold accents, sets Fraunces as the display
+   face, and adds editorial details (tricolor rule, stamp badge,
+   numbered module cards, drop-cap lede). No markup or JS changes —
+   all 152 QA assertions keep passing on visuals alone.
+   ============================================================ */
+
+:root{
+  /* Porcelain paper */
+  --bg:#faf7f1;
+  --surface:#fffdf8;
+  --surface-2:#f3eee1;
+  --surface-3:#e9e0cb;
+
+  /* Ink */
+  --ink:#1e1a14;
+  --ink-2:#6b6152;
+  --ink-3:#9c917d;
+
+  /* Lines */
+  --line:#e4dac4;
+  --line-2:#d2c5a6;
+
+  /* Primary: deep editorial green (replaces teal) */
+  --teal:#0e5e42;
+  --teal-deep:#0a4530;
+  --teal-ink:#0a4530;
+  --teal-tint:#e6efe8;
+
+  /* Secondary: terracotta */
+  --terra:#c4552d;
+  --terra-deep:#9c3f1f;
+  --terra-tint:#f9e9dd;
+
+  /* Gold */
+  --gold:#b9861f;
+
+  /* Status — tuned for paper */
+  --ok:#177a52;       --ok-tint:#e2f2e8;
+  --warn:#a86a1a;     --warn-tint:#faf0d8;
+  --crit:#b33744;     --crit-tint:#fae7e9;
+  --high:#c05a24;     --high-tint:#fbeadd;
+  --demo:#a86a1a;     --demo-tint:#faf0d8;
+
+  /* Type */
+  --display:"Fraunces",Georgia,"Times New Roman",serif;
+
+  /* Shape — slightly sharper, editorial */
+  --r-sm:6px; --r:10px; --r-lg:14px; --r-xl:18px;
+
+  /* Softer warm shadows */
+  --sh-1:0 1px 2px rgba(60,45,20,.06),0 10px 24px -18px rgba(60,45,20,.28);
+  --sh-2:0 2px 6px rgba(60,45,20,.07),0 28px 54px -30px rgba(60,45,20,.35);
+  --sh-pop:0 16px 44px -14px rgba(60,45,20,.4);
+}
+
+/* Programmatic focus target for the router/skip-link: never draw a page outline.
+   (Headless + some browsers match :focus-visible on view.focus(); the ring
+   around the whole page reads as a bug.) */
+#view:focus{outline:none}
+#view:focus-visible{outline:none}
+body::before{
+  content:"";position:fixed;top:0;left:0;right:0;height:6px;z-index:200;
+  background:linear-gradient(90deg,var(--teal) 0 33.3%,var(--terra) 33.3% 66.6%,var(--gold) 66.6% 100%);
+}
+.site-header{top:6px}
+.skip-link{top:6px}
+
+/* ---------- display type ---------- */
+.page-title,.section-title,.auth-card h1,.modal-head h2,
+.card-head h2,.kpi .v,.kpi-val,.cap b,.notfound h1,
+.mcard h3,.step h3,.receipt-head .ref{
+  font-family:var(--display);font-weight:600;letter-spacing:-.01em;
+}
+.page-title{font-size:clamp(1.7rem,1.3rem + 1.6vw,2.4rem)}
+.eyebrow{color:var(--terra)}
+a{color:var(--teal-deep)}
+::selection{background:var(--teal);color:#fff}
+:focus-visible{outline-color:var(--terra)}
+
+/* ---------- brand ---------- */
+.brand{font-family:var(--display);font-weight:600}
+.brand-mark{background:var(--teal);box-shadow:none;border-radius:50%}
+.brand small{color:var(--ink-2)}
+
+/* ---------- stamp demo badge ---------- */
+.badge-demo{
+  background:transparent;color:var(--terra);border:1.5px solid var(--terra);
+  border-radius:6px;transform:rotate(-2deg);font-weight:800;letter-spacing:.14em;
+}
+.demo-pill .badge-demo{box-shadow:none}
+
+/* ---------- buttons: flat editorial ---------- */
+.btn{border-radius:10px}
+.btn-primary{background:var(--teal);box-shadow:none;color:#fff}
+.btn-primary:hover{background:var(--teal-deep);filter:none}
+.btn-secondary{background:var(--surface);border-color:var(--line-2)}
+.btn-secondary:hover{border-color:var(--teal);color:var(--teal-ink)}
+.btn-ghost{color:var(--teal-deep)}
+.btn-ghost:hover{background:var(--teal-tint)}
+.btn-danger{background:var(--crit-tint);color:var(--crit);border-color:rgba(179,55,68,.35)}
+
+/* ---------- header / nav / drawer ---------- */
+.site-header{background:rgba(250,247,241,.94);border-bottom:1px solid var(--line)}
+.main-nav a{font-weight:600}
+.main-nav a[aria-current="page"]{color:var(--teal-ink);background:var(--teal-tint)}
+.drawer nav a[aria-current="page"]{background:var(--teal-tint);color:var(--teal-ink)}
+.drawer nav a svg{color:var(--teal-deep)}
+
+/* ---------- hero: porcelain editorial ---------- */
+.hero{
+  background:var(--surface);color:var(--ink);
+  border:1px solid var(--line);border-top:5px solid transparent;
+  border-image:linear-gradient(90deg,var(--teal),var(--terra),var(--gold)) 1 0 0 0;
+  box-shadow:var(--sh-2);
+}
+.hero::after{display:none}
+.hero .eyebrow{color:var(--terra)}
+.hero h1{font-family:var(--display);font-weight:500;letter-spacing:-.02em}
+.hero .lede{color:var(--ink-2)}
+.hero .lede::first-letter{
+  font-family:var(--display);font-size:1.9em;line-height:1;float:left;
+  padding:2px 8px 0 0;color:var(--teal);
+}
+.hero .btn-primary{background:var(--teal)}
+.hero .btn-secondary{border-color:var(--line-2)}
+.hero-stats{border-top:2px solid var(--ink);margin-top:26px;padding-top:6px}
+.hero-stats > div{padding:10px 2px;border-bottom:1px solid var(--line)}
+
+/* ---------- numbered module cards ---------- */
+.module-cards{counter-reset:mod}
+.mcard{position:relative;overflow:hidden}
+.mcard::before{
+  counter-increment:mod;content:counter(mod,decimal-leading-zero);
+  font-family:var(--display);font-size:13px;color:var(--terra);
+  letter-spacing:.08em;margin-bottom:2px;
+}
+.mcard:hover{border-color:var(--terra)}
+.mcard .ic{background:var(--teal-tint)}
+.mcard .ic svg{color:var(--teal-deep)}
+.mcard .go{color:var(--terra)}
+
+/* ---------- steps ---------- */
+.step .n{color:var(--terra)}
+
+/* ---------- KPI ---------- */
+.kpi .k svg{color:var(--teal-deep)}
+
+/* ---------- tables ---------- */
+.data thead th{background:var(--surface-2);color:var(--ink-2)}
+.data tr.best{background:linear-gradient(90deg,var(--teal-tint),rgba(230,239,232,.4))}
+.data tr.best td:first-child{box-shadow:inset 3px 0 0 var(--teal)}
+
+/* ---------- kv total ---------- */
+.kv .r.total{background:var(--teal-tint)}
+.kv .r.total > span:last-child{color:var(--teal-ink)}
+
+/* ---------- chat ---------- */
+.msg.me{background:var(--teal);border-bottom-right-radius:6px}
+.msg.bot{border-bottom-left-radius:6px}
+
+/* ---------- timeline / checklist / progress ---------- */
+.tl.done .dot{background:var(--teal);border-color:var(--teal)}
+.tl.done::before{background:var(--teal)}
+.tl.now .dot{border-color:var(--teal);color:var(--teal-ink);box-shadow:0 0 0 5px rgba(14,94,66,.14)}
+.check input{accent-color:var(--teal)}
+.check:hover{border-color:var(--teal)}
+.prog > i{background:var(--teal)}
+
+/* ---------- receipt stamp ---------- */
+.stamp{border-color:var(--teal);color:var(--teal-ink)}
+
+/* ---------- auth cards ---------- */
+.auth-card{position:relative;overflow:hidden;box-shadow:8px 8px 0 var(--surface-2)}
+.auth-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--teal),var(--terra),var(--gold));
+}
+.auth-card h1{font-size:1.6rem}
+.auth-brand b{font-family:var(--display);font-size:1.15rem}
+.auth-brand .brand-mark{border-radius:50%}
+.demo-acct:hover{border-color:var(--teal)}
+.role-pill{background:var(--teal);color:#fff}
+.mode-note{background:var(--warn-tint);border-color:#e8d3a0;color:#6d4d10}
+.shield-note{border-color:var(--line-2)}
+.shield-note svg{color:var(--teal)}
+
+/* ---------- admin console ---------- */
+.admin-side{background:#0c3f2d;color:#dcebe2;box-shadow:var(--sh-1)}
+.admin-side-title{color:#9dbfae}
+.admin-side a{color:#dcebe2}
+.admin-side a:hover{background:rgba(255,255,255,.08)}
+.admin-side a[aria-current="page"]{background:var(--terra);color:#fff}
+.admin-side-note{border-top-color:rgba(255,255,255,.14);color:#9dbfae}
+.perm-note{border-color:var(--line-2)}
+.save-bar{box-shadow:var(--sh-1)}
+.check-row input{accent-color:var(--teal)}
+.content-preview{background:#0c3f2d;color:#f2f7f3}
+.content-preview .eyebrow{color:var(--gold)}
+.fx-mini{background:var(--surface-2)}
+
+/* ---------- toast ---------- */
+.toast{background:#241d12;border-left-color:var(--teal)}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--surface);border-top:2px solid var(--ink)}
+.footer-disc{background:var(--surface-2)}
+
+/* ---------- misc ---------- */
+.ccy-tag{border-color:var(--line-2);background:var(--surface-2)}
+.chip:hover{border-color:var(--teal);color:var(--teal-ink)}
+.empty svg{color:var(--ink-3)}
+select.input{background-color:var(--surface)}
+input:focus,select:focus,textarea:focus{border-color:var(--teal-deep)}
