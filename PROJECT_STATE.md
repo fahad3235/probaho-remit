@@ -2,7 +2,7 @@
 
 **Status:** FULLY IMPLEMENTED & HARDENED (Strict Sign-In Entry + High-Security Admin Portal + Multi-Device Responsive).
 - Strict Sign-In Entry: Site starts strictly on the Sign-In Portal (`#/` & `#/sign-in`) with 1-tap quick fills for Student and Admin.
-- Attached Landing Page: Prominent `[🌐 Explore Public Landing Page →]` attached directly to the entry screen (`#/home`).
+- Attached Landing Page: Prominent `[Explore Public Landing Page →]` attached directly to the entry screen (`#/home`).
 - Admin Portal Security & Isolation: 100% of admin data, stats, and routes cut from public pages. Admin navigation is hidden from public view; unauthorized access to `#/admin/*` or `#/admin/users` is intercepted with high-security alerts.
 - Mobile View Option Removed: Fake iPhone mockup (`#/mobile`) completely removed.
 - Full Multi-Device Responsiveness: Pure responsive CSS grid and flexbox layout across mobile phones (360-480px), tablets (768-1024px), laptops (1200px), and desktops.
