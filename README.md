@@ -161,7 +161,7 @@ No automated suite ships in this repo. Verification is manual via §9.2 below: w
 6. Verify redirection to the protected administrator overview at `#/admin`.
 
 #### D. Notification & Alerts Hub
-1. Click the **🔔 Alerts** button in the top navigation bar or navigate to `#/notifications`.
+1. Click the **Alerts** button in the top navigation bar or navigate to `#/notifications`.
 2. Verify the multi-tab interface (All, Rates, KYC, Reminders, Security).
 3. Switch categories and test marking alerts as read.
 
@@ -186,7 +186,7 @@ No automated suite ships in this repo. Verification is manual via §9.2 below: w
 
 ## 11. Team & Hackathon Submission Metadata
 
-- **Competition**: 2026 Shenzhen International FinTech Competition (AI DEV FEST 2026)
+- **Competition**: 2026 Shenzhen International FinTech Competition
 - **Track**: International Track
 - **Topic**: Topic C — *AI as a Financial Participant*
 - **Team**: Probaho FinTech Team
