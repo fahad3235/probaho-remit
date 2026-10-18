@@ -1,4 +1,4 @@
-# PROJECT_STATE.md — Probaho Remit · Titan Edition
+# PROJECT_STATE.md - Probaho Remit · Titan Edition
 
 **Status:** FULLY IMPLEMENTED & HARDENED (Strict Sign-In Entry + High-Security Admin Portal + Multi-Device Responsive).
 - Strict Sign-In Entry: Site starts strictly on the Sign-In Portal (`#/` & `#/sign-in`) with 1-tap quick fills for Student and Admin.
